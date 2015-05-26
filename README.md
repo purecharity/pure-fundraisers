@@ -8,7 +8,7 @@ It depends on the Pure Charity Base Plugin being installed and it's credentials 
 
 In order to install the plugin:
 
-1. Upload the contents of the `purecharity-wp-fundraisers/trunk` directory to the `/wp-content/plugins/purecharity-wp-fundraisers` directory
+1. Copy the `/purecharity-wp-fundraisers` folder to the `/wp-content/plugins` on your WP install
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. You're done!
 
