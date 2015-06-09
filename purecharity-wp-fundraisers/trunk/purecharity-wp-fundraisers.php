@@ -16,7 +16,7 @@
  * Plugin Name:       Pure Charity Fundraisers
  * Plugin URI:        http://purecharity.com/
  * Description:       Plugin with a collection of shortcodes and template tags to display Pure Charity Fundraisers
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Rafael Dalprá / Pure Charity
  * Author URI:        http://purecharity.com/
  * License:           GPL-2.0+
@@ -96,4 +96,33 @@ function fr_force_template() {
 	$options = get_option( 'purecharity_fundraisers_settings' );
   include(TEMPLATEPATH . '/' . $options['single_view_template']);
   exit;
+}
+
+
+
+/*
+ * Plugin updater using GitHub
+ *
+ * Auto Updates through GitHub
+ *
+ * @since   1.1.3
+ */
+add_action( 'init', 'purecharity_wp_fundraisers_updater' );
+function purecharity_wp_fundraisers_updater() {
+  if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
+    $config = array(
+      'slug' => plugin_basename( __FILE__ ),
+      'proper_folder_name' => 'purecharity-wp-fundraisers',
+      'api_url' => 'https://api.github.com/repos/purecharity/pure-fundraisers',
+      'raw_url' => 'https://raw.github.com/purecharity/pure-fundraisers/master',
+      'github_url' => 'https://github.com/purecharity/pure-fundraisers',
+      'zip_url' => 'https://github.com/purecharity/pure-fundraisers/archive/master.zip',
+      'sslverify' => true,
+      'requires' => '3.0',
+      'tested' => '3.3',
+      'readme' => 'README.md',
+      'access_token' => '',
+    );
+    new WP_GitHub_Updater( $config );
+  }
 }
