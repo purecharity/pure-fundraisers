@@ -114,7 +114,6 @@ function purecharity_wp_fundraisers_updater() {
       'slug' => plugin_basename( __FILE__ ),
       'proper_folder_name' => 'purecharity-wp-fundraisers',
       'api_url' => 'https://api.github.com/repos/purecharity/pure-fundraisers',
-      'raw_url' => 'https://raw.github.com/purecharity/pure-fundraisers/master',
       'raw_url' => 'https://raw.githubusercontent.com/purecharity/pure-fundraisers/master/purecharity-wp-fundraisers/',
       'github_url' => 'https://github.com/purecharity/pure-fundraisers',
       'zip_url' => 'https://github.com/purecharity/pure-fundraisers/archive/master.zip',
