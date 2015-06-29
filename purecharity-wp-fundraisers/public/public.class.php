@@ -161,10 +161,8 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function listing(){
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    $donate_button_class = isset($options['iframe_donate']) ? 'iframe-button' : '';
 
     $html = self::print_custom_styles() ;
-    $html .= Purecharity_Wp_Base_Public::iframe_actions() ;
     $html .= '
       <div class="fr-list-container">
         '.self::live_search().'
@@ -191,7 +189,8 @@ class Purecharity_Wp_Fundraisers_Public {
             <td>'.$title.'</td>
             <td>
               <a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a> 
-              <a class="donate '.$donate_button_class.'" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+              <a class="donate
+              " href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
           </td>
          </tr>
       ';
@@ -215,10 +214,8 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function listing_grid(){
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    $donate_button_class = isset($options['iframe_donate']) ? 'iframe-button' : '';
 
     $html = self::print_custom_styles() ;
-    $html .= Purecharity_Wp_Base_Public::iframe_actions() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
 
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
@@ -258,7 +255,7 @@ class Purecharity_Wp_Fundraisers_Public {
           </div>
           <ul class="fr-list-actions pure_col pure_span_24">
             <li><a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a>
-            <li><a class="fr-themed-link '.$donate_button_class.'" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+            <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
           </ul>
         </div>
         </div>
@@ -281,10 +278,8 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function listing_last_grid(){
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    $donate_button_class = isset($options['iframe_donate']) ? 'iframe-button' : '';
 
     $html = self::print_custom_styles() ;
-    $html .= Purecharity_Wp_Base_Public::iframe_actions() ;
     $html .= '<div class="fr-list-container is-grid">';
 
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
@@ -309,7 +304,7 @@ class Purecharity_Wp_Fundraisers_Public {
           </div>
           <ul class="fr-list-actions">
             <li><a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a>
-            <li><a class="fr-themed-link '.$donate_button_class.'" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+            <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
           </ul>
         </div>
         </div>
@@ -338,10 +333,8 @@ class Purecharity_Wp_Fundraisers_Public {
     }
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    $donate_button_class = isset($options['iframe_donate']) ? 'iframe-button' : '';
 
     $html = self::print_custom_styles() ;
-    $html .= Purecharity_Wp_Base_Public::iframe_actions() ;
     $html .= '
       <div class="pure_row">
         <div class="fr-top-row pure_col pure_span_24">
@@ -371,7 +364,7 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
 
             <div class="fr-donate pure_col pure_span_6">
-              <a class="fr-pure-button '.$donate_button_class.'" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
+              <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
               '. (isset($options['updates_tab']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
             </div>
 
