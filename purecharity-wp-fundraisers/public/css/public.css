@@ -1,4 +1,9 @@
 
+fieldset.fr-livefilter {
+  float: left;
+  border:none;
+}
+
 .fr-filtering {
   float: right;
   width: 100%;
@@ -22,11 +27,7 @@
   border: none;
   color: #FFF;
   font-size: 10px;
-  font-weight: bold;
   text-transform: uppercase;
-  padding: 12px;
-  margin: 10px;
-  float: left;
 }
 .fr-filtering a {
   border: none;
