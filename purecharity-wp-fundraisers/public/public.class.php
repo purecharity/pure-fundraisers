@@ -109,7 +109,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public static function list_not_found($default = true){
-    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>' . ($default ? Purecharity_Wp_Base_Public::powered_by() : ''); 
+    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>' . ($default ? Purecharity_Wp_Base_Public::powered_by() : '');
     return $html;
   }
 
@@ -119,7 +119,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public static function not_found(){
-    return "<p>Fundraiser Not Found.</p>" . Purecharity_Wp_Base_Public::powered_by();;  
+    return "<p>Fundraiser Not Found.</p>" . Purecharity_Wp_Base_Public::powered_by();;
   }
 
   /**
@@ -188,7 +188,7 @@ class Purecharity_Wp_Fundraisers_Public {
         <tr class="row '.$class.'  fundraiser_'.$fundraiser->id.'">
             <td>'.$title.'</td>
             <td>
-              <a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a> 
+              <a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a>
               <a class="donate
               " href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
           </td>
@@ -233,7 +233,7 @@ class Purecharity_Wp_Fundraisers_Public {
         <div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
           <div class="fr-grid-list-content">';
               if ($fundraiser->images->medium == NULL) {
-                $html .= '    
+                $html .= '
                     <div class="fr-listing-avatar-container pure_span24">
                       <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
                     </div>
@@ -244,7 +244,7 @@ class Purecharity_Wp_Fundraisers_Public {
                       <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
                     </div>
 
-                  ';  
+                  ';
                 }
             $html .='
             <div class="fr-grid-item-content pure_col pure_span_24">
@@ -342,7 +342,7 @@ class Purecharity_Wp_Fundraisers_Public {
             <h3>'.$title.'</h3>
           </div>
           <div class="fr-donate mobile-hidden fr-donate-top pure_col pure_span_6">
-            <a class="fr-pure-button '.$donate_button_class.'" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
+            <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
           </div>
         </div>
         <div class="fr-container pure_col pure_span_24 fundraiser_'.self::$fundraiser->id.'">
@@ -370,7 +370,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
           </div>
 
-          <div class="fr-intro pure_col pure_span_24">        
+          <div class="fr-intro pure_col pure_span_24">
             '. self::single_view_funding_bar() .'
           </div>
           '.self::single_view_funding_div().'
@@ -402,7 +402,7 @@ class Purecharity_Wp_Fundraisers_Public {
     }else{
       return '';
     }
-    
+
   }
 
   /**
@@ -437,7 +437,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $start_date = new DateTime(self::$fundraiser->start_date);
     $end_date = new DateTime(self::$fundraiser->end_date);
     $today = new DateTime;
-    $date_diff = $today->diff($end_date);
+    $date_diff = (int)$today->diff($end_date)+1;
     $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
     if(self::$fundraiser->funding_goal != 'anonymous'){
       return '
@@ -480,9 +480,9 @@ class Purecharity_Wp_Fundraisers_Public {
                 '.self::print_updates().'
              </div>
              <div id="tab-3" class="tab-div pure_col pure_span_24"><!-- we will need to be able check a box to hide this tab / info in the admin of the plugin -->
-               
+
                 '.self::print_backers().'
-             
+
              </div>
            </div>
         </div>
@@ -509,9 +509,9 @@ class Purecharity_Wp_Fundraisers_Public {
                 '.self::print_updates().'
              </div>
              <div id="tab-3" class="tab-div pure_col pure_span_24"><!-- we will need to be able check a box to hide this tab / info in the admin of the plugin -->
-               
+
                 '.self::print_backers().'
-             
+
              </div>
            </div>
         </div>
@@ -524,7 +524,7 @@ class Purecharity_Wp_Fundraisers_Public {
   }
 
 
-          
+
   /**
    * Backers list.
    *
@@ -616,7 +616,7 @@ class Purecharity_Wp_Fundraisers_Public {
    *
    * @since    1.0.0
    */
-  
+
 
   /**
    * Percentage calculator.
