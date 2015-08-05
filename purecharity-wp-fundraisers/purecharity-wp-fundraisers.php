@@ -109,9 +109,9 @@ function set_meta_tags(){
 		$base_plugin = new Purecharity_Wp_Base();
 		$fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $_GET['slug'])->fundraiser;
 		echo '
-			<meta property="og:title" content="'.$fundraiser->name.'">
+			<meta property="og:title" content="'.strip_tags($fundraiser->name).'">
 			<meta property="og:image" content="'.$fundraiser->images->large.'">
-			<meta property="og:description" content="'.$fundraiser->about.'">
+			<meta property="og:description" content="'.strip_tags($fundraiser->about).'">
 		' . "\n";
 	}
 }
