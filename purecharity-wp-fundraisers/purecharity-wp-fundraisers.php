@@ -16,7 +16,7 @@
  * Plugin Name:       Pure Charity Fundraisers
  * Plugin URI:        http://purecharity.com/
  * Description:       Plugin with a collection of shortcodes and template tags to display Pure Charity Fundraisers
- * Version:           1.1.4
+ * Version:           1.1.5
  * Author:            Pure Charity
  * Author URI:        http://purecharity.com/
  * License:           GPL-2.0+
@@ -98,7 +98,23 @@ function fr_force_template() {
   exit;
 }
 
-
+/**
+ * Sets the meta tags for the facebook sharing.
+ *
+ * @since    1.1.5
+ */
+add_action( 'wp_head', 'set_meta_tags' );
+function set_meta_tags(){
+	if(isset($_GET['slug'])){
+		$base_plugin = new Purecharity_Wp_Base();
+		$fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $_GET['slug'])->fundraiser;
+		echo '
+			<meta property="og:title" content="'.$fundraiser->name.'">
+			<meta property="og:image" content="'.$fundraiser->images->large.'">
+			<meta property="og:description" content="'.$fundraiser->about.'">
+		' . "\n";
+	}
+}
 
 /*
  * Plugin updater using GitHub

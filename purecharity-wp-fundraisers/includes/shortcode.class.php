@@ -21,7 +21,7 @@
  * @author     Pure Charity <dev@purecharity.com>
  */
 class Purecharity_Wp_Fundraisers_Shortcode {
- 
+
 
   /**
    * The Base Plugin.
@@ -107,10 +107,10 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       $fundraisers = self::$base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
 
       if ($fundraisers && count($fundraisers) > 0) {
-        Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers; 
+        Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
         return Purecharity_Wp_Fundraisers_Public::listing_last_grid();
       }else{
-        return Purecharity_Wp_Fundraisers_Public::list_not_found();        
+        return Purecharity_Wp_Fundraisers_Public::list_not_found();
       };
     }
   }
@@ -135,7 +135,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
     ), $atts );
     if(isset($_GET['slug'])){
       $opt = array();
-      $opt['slug'] = $_GET['slug']; 
+      $opt['slug'] = $_GET['slug'];
       $opt['title'] = $options['title'];
       return self::fundraiser_shortcode($opt);
     }else{
@@ -160,7 +160,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       if(isset($options['dir']) && $options['dir'] != ''){
         $query_var[] = 'dir='.$options['dir'];
       }
-      
+
       if(isset($_GET['query']) && $_GET['query'] != ''){
         $query_var[] = 'query=' . urlencode($_GET['query']);
       }
@@ -168,15 +168,15 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       $fundraisers = self::$base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
 
       if ($fundraisers && count($fundraisers) > 0) {
-        Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers; 
-        Purecharity_Wp_Fundraisers_Public::$options = $options; 
+        Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
+        Purecharity_Wp_Fundraisers_Public::$options = $options;
         if($options['grid'] == 'true'){
           return Purecharity_Wp_Fundraisers_Public::listing_grid();
         }else{
           return Purecharity_Wp_Fundraisers_Public::listing();
         }
       }else{
-        return Purecharity_Wp_Fundraisers_Public::list_not_found();        
+        return Purecharity_Wp_Fundraisers_Public::list_not_found();
       };
     }
   }
@@ -198,12 +198,13 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
-        Purecharity_Wp_Fundraisers_Public::$options = $options; 
+        Purecharity_Wp_Fundraisers_Public::$options = $options;
         return Purecharity_Wp_Fundraisers_Public::show();
       }else{
-        return Purecharity_Wp_Fundraisers_Public::not_found();       
+        return Purecharity_Wp_Fundraisers_Public::not_found();
       }
 
     }
   }
+
 }

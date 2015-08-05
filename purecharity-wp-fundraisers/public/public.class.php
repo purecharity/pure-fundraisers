@@ -381,7 +381,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= Purecharity_Wp_Base_Public::powered_by();
     return $html;
   }
-
+  
   /**
    * Funding stats for grid listing.
    *
@@ -437,7 +437,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $start_date = new DateTime(self::$fundraiser->start_date);
     $end_date = new DateTime(self::$fundraiser->end_date);
     $today = new DateTime;
-    $date_diff = (int)$today->diff($end_date)+1;
+    $date_diff = $today->diff($end_date)->days+1;
     $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
     if(self::$fundraiser->funding_goal != 'anonymous'){
       return '
@@ -445,7 +445,7 @@ class Purecharity_Wp_Fundraisers_Public {
           <ul class="fr-single-stats pure_col pure_span_24">
             <li class="pure_col pure_span_6"><strong>$'.number_format(self::$fundraiser->funding_goal, 0, '.', ',').'</strong><br/> <span class="fr-stat-title">One-time Goal</span></li>
             <li class="pure_col pure_span_6"><strong>$'.number_format(self::$fundraiser->funding_needed, 0, '.', ',').'</strong><br/> <span class="fr-stat-title">Still Needed</span></li>
-            <li class="pure_col pure_span_6"><strong>'.$date_diff->days.'</strong><br/> <span class="fr-stat-title">Days to Go</span></li>
+            <li class="pure_col pure_span_6"><strong>'.$date_diff.'</strong><br/> <span class="fr-stat-title">Days to Go</span></li>
             <li class="pure_col pure_span_6">
             '.Purecharity_Wp_Base_Public::sharing_links(array(), self::$fundraiser->name." Fundraisers").'
             <a target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'"><img src="' . plugins_url( 'images/share-purecharity.png', __FILE__ ) . '" ></a>
