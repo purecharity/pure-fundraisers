@@ -349,30 +349,22 @@ class Purecharity_Wp_Fundraisers_Public {
           <div class="fr-header pure_col pure_span_24">
             <img src="'.self::$fundraiser->images->large.'">
           </div>
-
           <div class="fr-middle-row pure_col pure_span_24">
-
             <div class="fr-avatar-container pure_col pure_span_5">
               <div class="fr-avatar" href="#" style="background-image: url('.self::$fundraiser->images->small.')"></div>
             </div>
-
             <div class="fr-info pure_col pure_span_13">
               <p class="fr-location">'.self::$fundraiser->country.'</p>
                 <p class="fr-organizer">
                   Organized by <a class="fr-themed-link" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->field_partner->slug.'">'.self::$fundraiser->field_partner->name.'</a>
                 </p>
             </div>
-
             <div class="fr-donate pure_col pure_span_6">
               <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
               '. (isset($options['updates_tab']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
             </div>
-
           </div>
-
-          <div class="fr-intro pure_col pure_span_24">
-            '. self::single_view_funding_bar() .'
-          </div>
+          '. self::single_view_funding_bar() .'
           '.self::single_view_funding_div().'
           '.self::single_view_tabs().'
         </div>
@@ -381,7 +373,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= Purecharity_Wp_Base_Public::powered_by();
     return $html;
   }
-  
+
   /**
    * Funding stats for grid listing.
    *
@@ -414,11 +406,13 @@ class Purecharity_Wp_Fundraisers_Public {
     $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
     if(self::$fundraiser->funding_goal != 'anonymous'){
       return '
-        <div class="fr-single-status-section pure_col pure_span_24">
-          <div class="fr-single-status pure_col pure_span_24">
-            <div class="fr-single-progress" style="width:'.$funded.'%"></div>
-            <div class="fr-raised pure_col pure_span_24">
-              <span class="fr-raised-label">Amount Raised</span><span class="fr-raised-amount">$'.number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 0, '.', ',').'</span>
+        <div class="fr-intro pure_col pure_span_24">
+          <div class="fr-single-status-section pure_col pure_span_24">
+            <div class="fr-single-status pure_col pure_span_24">
+              <div class="fr-single-progress" style="width:'.$funded.'%"></div>
+              <div class="fr-raised pure_col pure_span_24">
+                <span class="fr-raised-label">Amount Raised</span><span class="fr-raised-amount">$'.number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 0, '.', ',').'</span>
+              </div>
             </div>
           </div>
         </div>
