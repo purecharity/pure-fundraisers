@@ -365,8 +365,8 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
           </div>
           '. self::single_view_funding_bar() .'
-          '.self::single_view_funding_div().'
-          '.self::single_view_tabs().'
+          '. self::single_view_funding_div() .'
+          '. self::single_view_tabs() .'
         </div>
       </div>
     ';
@@ -380,9 +380,10 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.5
    */
   public static function grid_funding_stats($fundraiser){
+    $html = '';
     if($fundraiser->funding_goal != 'anonymous'){
       $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-      return '
+      $html .= '
         <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
           <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
         </div>
@@ -391,8 +392,19 @@ class Purecharity_Wp_Fundraisers_Public {
           <p>Raised: <strong>$'.number_format(($fundraiser->funding_goal-$fundraiser->funding_needed), 0, '.', ',').'</strong></p>
         </div>
       ';
-    }else{
-      return '';
+    }
+
+    if($fundraiser->recurring_funding_goal != NULL && $fundraiser->recurring_funding_goal != 'anonymous'){
+      $funded = self::percent(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed) ,$fundraiser->recurring_funding_goal);
+      $html .= '
+        <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
+          <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
+        </div>
+        <div class="fr-grid-stats pure_col pure_span_24">
+          <p>Goal: <strong>$'.number_format($fundraiser->recurring_funding_goal, 0, '.', ',').'</strong></p>
+          <p>Raised: <strong>$'.number_format(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed), 0, '.', ',').'</strong></p>
+        </div>
+      ';
     }
 
   }
