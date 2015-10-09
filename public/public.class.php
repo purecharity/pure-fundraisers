@@ -217,6 +217,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
+    $html .= '<div>'; 
 
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
 
@@ -229,40 +230,40 @@ class Purecharity_Wp_Fundraisers_Public {
       }
 
       $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-      $html .= '
-        <div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
+      $html .= '<div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
           <div class="fr-grid-list-content">';
-              if ($fundraiser->images->medium == NULL) {
-                $html .= '
-                    <div class="fr-listing-avatar-container pure_span24">
-                      <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
-                    </div>
-                  ';
-                }else{
-                  $html .= '
-                    <div class="fr-listing-avatar-container pure_span24">
-                      <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
-                    </div>
+      if ($fundraiser->images->medium == NULL) {
+        $html .= '
+            <div class="fr-listing-avatar-container pure_span24">
+              <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
+            </div>
+          ';
+        }else{
+          $html .= '
+            <div class="fr-listing-avatar-container pure_span24">
+              <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
+            </div>
 
-                  ';
-                }
-            $html .='
+          ';
+        }
+        $html .='
             <div class="fr-grid-item-content pure_col pure_span_24">
-              <div class="fr-grid-title-container">
-                <p class="fr-grid-title">'.$title.'</p>
-              </div>
-              '.self::grid_funding_stats($fundraiser).'
+                <div class="fr-grid-title-container">
+                  <p class="fr-grid-title">'.$title.'</p>
+                </div>
+                '.self::grid_funding_stats($fundraiser).'
+            </div>
+            <ul class="fr-list-actions pure_col pure_span_24">
+              <li><a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a>
+              <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+            </ul>
           </div>
-          <ul class="fr-list-actions pure_col pure_span_24">
-            <li><a class="fr-themed-link" href="?slug='.$fundraiser->slug.'">More Info</a>
-            <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-          </ul>
-        </div>
         </div>
       ';
     }
 
     $html .= self::list_not_found(false);
+    $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
@@ -365,8 +366,8 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
           </div>
           '. self::single_view_funding_bar() .'
-          '.self::single_view_funding_div().'
-          '.self::single_view_tabs().'
+          '. self::single_view_funding_div() .'
+          '. self::single_view_tabs() .'
         </div>
       </div>
     ';
@@ -380,9 +381,13 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.5
    */
   public static function grid_funding_stats($fundraiser){
+    $html = '';
     if($fundraiser->funding_goal != 'anonymous'){
       $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-      return '
+      $html .= '
+        <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
+          <span>One-time donations:</span>
+        </div>
         <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
           <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
         </div>
@@ -391,10 +396,24 @@ class Purecharity_Wp_Fundraisers_Public {
           <p>Raised: <strong>$'.number_format(($fundraiser->funding_goal-$fundraiser->funding_needed), 0, '.', ',').'</strong></p>
         </div>
       ';
-    }else{
-      return '';
     }
 
+    if($fundraiser->recurring_funding_goal != NULL && $fundraiser->recurring_funding_goal != 'anonymous'){
+      $funded = self::percent(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed) ,$fundraiser->recurring_funding_goal);
+      $html .= '
+        <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
+          <span>Recurring donations:</span>
+        </div>
+        <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
+          <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
+        </div>
+        <div class="fr-grid-stats pure_col pure_span_24">
+          <p>Goal: <strong>$'.number_format($fundraiser->recurring_funding_goal, 0, '.', ',').'</strong></p>
+          <p>Raised: <strong>$'.number_format(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed), 0, '.', ',').'</strong></p>
+        </div>
+      ';
+    }
+    return $html;
   }
 
   /**
@@ -402,24 +421,9 @@ class Purecharity_Wp_Fundraisers_Public {
    *
    * @since    1.0.5
    */
-  public static function single_view_funding_bar(){
-    $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
-    if(self::$fundraiser->funding_goal != 'anonymous'){
-      return '
-        <div class="fr-intro pure_col pure_span_24">
-          <div class="fr-single-status-section pure_col pure_span_24">
-            <div class="fr-single-status pure_col pure_span_24">
-              <div class="fr-single-progress" style="width:'.$funded.'%"></div>
-              <div class="fr-raised pure_col pure_span_24">
-                <span class="fr-raised-label">Amount Raised</span><span class="fr-raised-amount">$'.number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 0, '.', ',').'</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      ';
-    }else{
-      return '';
-    }
+  public static function single_view_funding_bar(){ 
+    include('includes/single-view-funding-bar.php'); 
+    return $html; 
   }
 
   /**
@@ -428,28 +432,8 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.5
    */
   public static function single_view_funding_div(){
-    $start_date = new DateTime(self::$fundraiser->start_date);
-    $end_date = new DateTime(self::$fundraiser->end_date);
-    $today = new DateTime;
-    $date_diff = $today->diff($end_date)->days+1;
-    $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
-    if(self::$fundraiser->funding_goal != 'anonymous'){
-      return '
-        <div class="fr-single-info pure_col pure_span_24">
-          <ul class="fr-single-stats pure_col pure_span_24">
-            <li class="pure_col pure_span_6"><strong>$'.number_format(self::$fundraiser->funding_goal, 0, '.', ',').'</strong><br/> <span class="fr-stat-title">One-time Goal</span></li>
-            <li class="pure_col pure_span_6"><strong>$'.number_format(self::$fundraiser->funding_needed, 0, '.', ',').'</strong><br/> <span class="fr-stat-title">Still Needed</span></li>
-            <li class="pure_col pure_span_6"><strong>'.$date_diff.'</strong><br/> <span class="fr-stat-title">Days to Go</span></li>
-            <li class="pure_col pure_span_6">
-            '.Purecharity_Wp_Base_Public::sharing_links(array(), self::$fundraiser->name." Fundraisers").'
-            <a target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'"><img src="' . plugins_url( 'images/share-purecharity.png', __FILE__ ) . '" ></a>
-            </li>
-          </ul>
-        </div>
-      ';
-    }else{
-      return '';
-    }
+    include('includes/single-view-funding-div.php');
+    return $html;
   }
 
   /**
@@ -458,63 +442,8 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.5
    */
   public static function single_view_tabs(){
-    $options = get_option( 'purecharity_fundraisers_settings' );
-    $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
-    if(self::$fundraiser->funding_goal != 'anonymous'){
-      return '
-        <div class="fr-body pure_span_24 pure_col">
-          <div id="fr-tabs" class="pure_col pure_span_24">
-             <ul class="fr-tabs-list pure_col pure_span_24">
-               <li><a class="fr-themed-link" href="#tab-1">About</a></li>
-               '. (isset($options['updates_tab']) ?  '' : '<li><a class="fr-themed-link" href="#tab-2">Updates</a></li>') .'
-               '. (isset($options['backers_tab']) ?  '' : '<li><a class="fr-themed-link" href="#tab-3">Backers</a></li>') .'
-             </ul>
-             <div id="tab-1" class="tab-div pure_col pure_span_24">'.self::$fundraiser->about.'</div>
-             <div id="tab-2" class="tab-div pure_col pure_span_24">
-                '.self::print_updates().'
-             </div>
-             <div id="tab-3" class="tab-div pure_col pure_span_24"><!-- we will need to be able check a box to hide this tab / info in the admin of the plugin -->
-
-                '.self::print_backers().'
-
-             </div>
-           </div>
-        </div>
-      ';
-    }else{
-
-      $title = self::$fundraiser->name;
-      if(isset($options['title']) && $options['title'] == 'owner_name'){
-        $title = self::$fundraiser->owner->name;
-      }
-      if(isset($options['title']) && $options['title'] == 'title_and_owner_name'){
-        $title = self::$fundraiser->name.' by '.self::$fundraiser->owner->name;
-      }
-      return '
-        <div class="fr-body pure_span_20 pure_col">
-          <div id="fr-tabs" class="pure_col pure_span_24">
-             <ul class="fr-tabs-list pure_col pure_span_24">
-               <li><a class="fr-themed-link" href="#tab-1">About</a></li>
-               '. (isset($options['updates_tab']) ?  '' : '<li><a class="fr-themed-link" href="#tab-2">Updates</a></li>') .'
-               '. (isset($options['backers_tab']) ?  '' : '<li><a class="fr-themed-link" href="#tab-3">Backers</a></li>') .'
-             </ul>
-             <div id="tab-1" class="tab-div pure_col pure_span_24">'.self::$fundraiser->about.'</div>
-             <div id="tab-2" class="tab-div pure_col pure_span_24">
-                '.self::print_updates().'
-             </div>
-             <div id="tab-3" class="tab-div pure_col pure_span_24"><!-- we will need to be able check a box to hide this tab / info in the admin of the plugin -->
-
-                '.self::print_backers().'
-
-             </div>
-           </div>
-        </div>
-        <div class="fr-body pure_span_4 pure_col text-centered">
-          '.Purecharity_Wp_Base_Public::sharing_links(array(), self::$fundraiser->about, $title, self::$fundraiser->images->large).'
-          <a target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'"><img src="' . plugins_url( 'images/share-purecharity.png', __FILE__ ) . '" ></a>
-        </div>
-      ';
-    }
+    include('includes/single-view-tabs.php');
+    return $html;
   }
 
 
