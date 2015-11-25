@@ -1,4 +1,4 @@
-
+.no-border { border: none !important; }
 fieldset.fr-livefilter {
   float: left;
   border:none;
@@ -747,3 +747,4 @@ ul.fr-backers li .fr-backer-name {
 
 
 }
+ 
