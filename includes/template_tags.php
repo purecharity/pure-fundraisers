@@ -53,6 +53,6 @@ function pc_last_fundraisers($options){
  */
 function pc_fundraiser_info($slug){
   $base_plugin = new Purecharity_Wp_Base();
-  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $slug);
+  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $slug)->fundraiser;
   return $tt_fundraiser;
 }
