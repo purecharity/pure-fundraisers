@@ -54,6 +54,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       add_shortcode('fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraisers_shortcode'));
       add_shortcode('last_fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'last_fundraisers_shortcode'));
       add_shortcode('fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_shortcode'));
+      add_shortcode('fundraiser_funding_bar', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_funding_bar_shortcode'));
 
       self::$base_plugin = new Purecharity_Wp_Base();
     }
@@ -200,6 +201,32 @@ class Purecharity_Wp_Fundraisers_Shortcode {
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         return Purecharity_Wp_Fundraisers_Public::show();
+      }else{
+        return Purecharity_Wp_Fundraisers_Public::not_found();
+      }
+
+    }
+  }
+
+  /**
+   * Initialize the Fundraiser Funding Bar shortcode.
+   *
+   * @since    1.2.1
+   */
+  public static function fundraiser_funding_bar_shortcode($atts)
+  {
+    $options = shortcode_atts( array(
+      'slug' => false,
+      'standalone_bar' => true
+    ), $atts );
+
+    if ($options['slug']) {
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['slug']);
+      if ($fundraiser) {
+        $fundraiser = $fundraiser->fundraiser;
+        Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
+        Purecharity_Wp_Fundraisers_Public::$options = $options;
+        return Purecharity_Wp_Fundraisers_Public::single_view_funding_bar();
       }else{
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
