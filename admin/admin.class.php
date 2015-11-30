@@ -209,7 +209,7 @@ class Purecharity_Wp_Fundraisers_Admin {
 		<select name="purecharity_fundraisers_settings[single_view_template]">
 			<option value="">Inherit from the listing page</option>
 			<?php foreach($templates as $key => $template){ ?>
-				<option <?php echo $template == @$options['single_view_template'] ? 'selected' : '' ?>><?php echo "$key ($template)" ?></option>
+				<option <?php echo $template == @$options['single_view_template'] ? 'selected' : '' ?> value="<?php echo $template; ?>"><?php echo "$key ($template)" ?></option>
 			<?php } ?>
 		</select>
 		<?php
