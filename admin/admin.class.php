@@ -203,11 +203,13 @@ class Purecharity_Wp_Fundraisers_Admin {
 	 */
 	public static function single_view_template_render(  ) { 
 		$options = get_option( 'purecharity_fundraisers_settings' );
+		$templates = get_page_templates();
+		$templates['[Plugin Template] Single Page without any other content'] = 'page-purecharity-fundraisers-template.php';
 		?>
 		<select name="purecharity_fundraisers_settings[single_view_template]">
 			<option value="">Inherit from the listing page</option>
-			<?php foreach(get_page_templates() as $template){ ?>
-				<option <?php echo $template == @$options['single_view_template'] ? 'selected' : '' ?>><?php echo $template ?></option>
+			<?php foreach($templates as $key => $template){ ?>
+				<option <?php echo $template == @$options['single_view_template'] ? 'selected' : '' ?>><?php echo "$key ($template)" ?></option>
 			<?php } ?>
 		</select>
 		<?php
