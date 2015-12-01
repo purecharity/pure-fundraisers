@@ -33,6 +33,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 = 1.2.1 =
 * Added funding bar shortcode.
 
+= 1.2 =
+* Added fundraiser info template tag.
+
 = 1.1.7 =
 * Minor bugfixes.
 

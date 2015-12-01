@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Used on public display of the Giving Circle(s)
+ * Used on public display of the Fundraiser(s)
  *
  * @link       http://purecharity.com
  * @since      1.0.0
@@ -11,7 +11,7 @@
  */
 
 /**
- * Used on public display of the Giving Circle(s).
+ * Used on public display of the Fundraiser(s).
  *
  * This class defines all the shortcodes necessary.
  *

@@ -10,7 +10,7 @@
  */
 
 /**
- * Trips listing.
+ * Fundraisers listing.
  *
  * For more information, please refer to the readme.
  *
@@ -42,4 +42,17 @@ function pc_last_fundraisers($options){
       return Purecharity_Wp_Fundraisers_Public::list_not_found();        
     };
   }
+}
+
+/**
+ * Fundraiser info.
+ *
+ * For more information, please refer to the readme.
+ *
+ * @since    1.0.1
+ */
+function pc_fundraiser_info($slug){
+  $base_plugin = new Purecharity_Wp_Base();
+  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $slug)->fundraiser;
+  return $tt_fundraiser;
 }

@@ -105,7 +105,7 @@ function fr_force_template() {
  */
 add_action( 'wp_head', 'set_fr_meta_tags' );
 function set_fr_meta_tags(){
-	if(isset($_GET['slug'])){
+	if(isset($_GET['slug']) && false){
 		$base_plugin = new Purecharity_Wp_Base();
 		$fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $_GET['slug'])->fundraiser;
 		echo '
