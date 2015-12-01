@@ -1,8 +1,10 @@
 <?php
   include('single-view-vars.php');
   if($has_none){ return ''; }
+  
+  $klass = self::$options['standalone_bar'] ? 'no-border' : '';
 
-  $html = '<div class="fr-intro pure_col pure_span_24">';
+  $html = '<div class="fr-intro pure_col pure_span_24 '.$klass.'">';
 
   if(self::$fundraiser->funding_goal != 'anonymous'){
     $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
