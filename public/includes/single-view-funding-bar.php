@@ -2,7 +2,7 @@
   include('single-view-vars.php');
   if($has_none){ return ''; }
   
-  $klass = self::$options['standalone_bar'] ? 'no-border' : '';
+  $klass = @self::$options['standalone_bar'] ? 'no-border' : '';
 
   $html = '<div class="fr-intro pure_col pure_span_24 '.$klass.'">';
 
