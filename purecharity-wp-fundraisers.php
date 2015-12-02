@@ -93,13 +93,18 @@ register_activation_hook( __FILE__, array( 'Purecharity_Wp_Fundraisers', 'activa
  * @since    1.0.4
  */
 function fr_force_template() {
-	$options = get_option( 'purecharity_fundraisers_settings' );
-  if($options['single_view_template'] == 'purecharity-plugin-template.php'){
-    include(purecharity_plugin_template());
-  }else{
-    include(TEMPLATEPATH . '/' . $options['single_view_template']); 
+  try{
+    $options = get_option( 'purecharity_fundraisers_settings' );
+    if($options['single_view_template'] == 'purecharity-plugin-template.php'){
+      include(purecharity_plugin_template());
+    }else{
+      include(TEMPLATEPATH . '/' . $options['single_view_template']); 
+    }
+    exit;
   }
-  exit;
+  catch(Exception $e){
+    echo "Custom template invalid.";
+  }
 }
 
 /**
