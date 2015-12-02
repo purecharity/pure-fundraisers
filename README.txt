@@ -30,6 +30,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.3.1 =
+* Moved the special template to the base plugin.
+
 = 1.3 =
 * Added a special page template that excludes everything but the shortcode from any page.
 

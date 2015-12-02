@@ -16,7 +16,7 @@
  * Plugin Name:       Pure Charity Fundraisers
  * Plugin URI:        http://purecharity.com/
  * Description:       Plugin with a collection of shortcodes and template tags to display Pure Charity Fundraisers
- * Version:           1.3
+ * Version:           1.3.1
  * Author:            Pure Charity
  * Author URI:        http://purecharity.com/
  * License:           GPL-2.0+
@@ -94,8 +94,8 @@ register_activation_hook( __FILE__, array( 'Purecharity_Wp_Fundraisers', 'activa
  */
 function fr_force_template() {
 	$options = get_option( 'purecharity_fundraisers_settings' );
-  if($options['single_view_template'] == 'page-purecharity-fundraisers-template.php'){
-    include(plugin_dir_path( __FILE__ ) . 'public/partials/' . $options['single_view_template']);
+  if($options['single_view_template'] == 'purecharity-plugin-template.php'){
+    include(purecharity_plugin_template());
   }else{
     include(TEMPLATEPATH . '/' . $options['single_view_template']); 
   }
