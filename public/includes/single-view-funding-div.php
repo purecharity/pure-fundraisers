@@ -1,9 +1,6 @@
 <?php
   include('single-view-vars.php');
 
-  // var_dump($has_one_time);
-  // exit;
-
   $html = '';
   if($has_one_time || $has_recurring){
     $html .= '
