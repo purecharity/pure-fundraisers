@@ -1,6 +1,6 @@
 <?php
   include('single-view-vars.php');
-  if($has_none){ return ''; }
+  if($has_none){ $html = ''; return ''; }
   
   $klass = @self::$options['standalone_bar'] ? 'no-border' : '';
 
