@@ -120,13 +120,6 @@ class Purecharity_Wp_Fundraisers_Admin {
 		);
 
 		add_settings_field( 
-			'iframe_donate', __( 'Enable Iframe Donation', 'wordpress' ), 
-			array('Purecharity_Wp_Fundraisers_Admin', 'iframe_donate_render'), 
-			'pfPluginPage', 
-			'purecharity_fundraisers_display_pfPluginPage_section' 
-		);
-
-		add_settings_field( 
 			'fundraise_cause', __( 'Hide "Fundraise for this cause" link', 'wordpress' ), 
 			array('Purecharity_Wp_Fundraisers_Admin', 'fundraise_cause_render'), 
 			'pfPluginPage', 
@@ -211,22 +204,6 @@ class Purecharity_Wp_Fundraisers_Admin {
 				<option <?php echo $template == @$options['single_view_template'] ? 'selected' : '' ?> value="<?php echo $template; ?>"><?php echo "$key ($template)" ?></option>
 			<?php } ?>
 		</select>
-		<?php
-	}
-
-	/**
-	 * Renders iframe donate.
-	 *
-	 * @since    1.0.2
-	 */
-	public static function iframe_donate_render(  ) { 
-		$options = get_option( 'purecharity_fundraisers_settings' );
-		?>
-		<input 
-			type="checkbox" 
-			name="purecharity_fundraisers_settings[iframe_donate]" 
-			<?php echo (isset($options['iframe_donate'])) ? 'checked' : '' ?>
-			value="true">
 		<?php
 	}
 
