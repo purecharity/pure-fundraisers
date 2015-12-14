@@ -68,16 +68,16 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public static function last_fundraisers_shortcode($atts)
   {
     $options = shortcode_atts( array(
-      'slug' => false,
+      'fundraiser' => false,
       'query' => get_query_var('query'),
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
       'title' => get_query_var('title'),
       'limit' => get_query_var('limit')
     ), $atts );
-    if(isset($_GET['slug'])){
+    if(isset($_GET['fundraiser'])){
       $opt = array();
-      $opt['slug'] = $_GET['slug'];
+      $opt['fundraiser'] = $_GET['fundraiser'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -124,7 +124,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public static function fundraisers_shortcode($atts)
   {
     $options = shortcode_atts( array(
-      'slug' => false,
+      'fundraiser' => false,
       'query' => get_query_var('query'),
       'grid' => get_query_var('grid'),
       'title' => get_query_var('title'),
@@ -134,9 +134,9 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'order' => get_query_var('order'),
       'hide_search' => get_query_var('hide_search')
     ), $atts );
-    if(isset($_GET['slug'])){
+    if(isset($_GET['fundraiser'])){
       $opt = array();
-      $opt['slug'] = $_GET['slug'];
+      $opt['fundraiser'] = $_GET['fundraiser'];
       $opt['title'] = $options['title'];
       return self::fundraiser_shortcode($opt);
     }else{
@@ -190,12 +190,12 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public static function fundraiser_shortcode($atts)
   {
     $options = shortcode_atts( array(
-      'slug' => false,
+      'fundraiser' => false,
       'title' => get_query_var('title')
     ), $atts );
 
-    if ($options['slug']) {
-      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['slug']);
+    if ($options['fundraiser']) {
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?fundraiser='. $options['fundraiser']);
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
@@ -216,12 +216,12 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public static function fundraiser_funding_bar_shortcode($atts)
   {
     $options = shortcode_atts( array(
-      'slug' => false,
+      'fundraiser' => false,
       'standalone_bar' => true
     ), $atts );
 
-    if ($options['slug']) {
-      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['slug']);
+    if ($options['fundraiser']) {
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?fundraiser='. $options['fundraiser']);
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;

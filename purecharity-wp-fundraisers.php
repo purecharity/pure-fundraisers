@@ -16,7 +16,7 @@
  * Plugin Name:       Pure Charity Fundraisers
  * Plugin URI:        http://purecharity.com/
  * Description:       Plugin with a collection of shortcodes and template tags to display Pure Charity Fundraisers
- * Version:           1.3.1
+ * Version:           1.3.2
  * Author:            Pure Charity
  * Author URI:        http://purecharity.com/
  * License:           GPL-2.0+
@@ -114,9 +114,9 @@ function fr_force_template() {
  */
 add_action( 'wp_head', 'set_fr_meta_tags' );
 function set_fr_meta_tags(){
-	if(isset($_GET['slug']) && false){
+	if(isset($_GET['fundraiser']) && false){
 		$base_plugin = new Purecharity_Wp_Base();
-		$fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $_GET['slug'])->fundraiser;
+		$fundraiser = $base_plugin->api_call('fundraisers/show?fundraiser='. $_GET['fundraiser'])->fundraiser;
 		echo '
 			<meta property="og:title" content="'.strip_tags($fundraiser->name).'">
 			<meta property="og:image" content="'.$fundraiser->images->large.'">
@@ -136,7 +136,7 @@ add_action( 'init', 'purecharity_wp_fundraisers_updater' );
 function purecharity_wp_fundraisers_updater() {
   if ( is_admin() ) { // note the use of is_admin() to double check that this is happening in the admin
     $fr_config = array(
-      'slug' => plugin_basename( __FILE__ ),
+      'fundraiser' => plugin_basename( __FILE__ ),
       'proper_folder_name' => 'purecharity-wp-fundraisers',
       'api_url' => 'https://api.github.com/repos/purecharity/pure-fundraisers',
       'raw_url' => 'https://raw.githubusercontent.com/purecharity/pure-fundraisers/master/purecharity-wp-fundraisers/',
