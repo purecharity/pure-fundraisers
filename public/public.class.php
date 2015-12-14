@@ -254,7 +254,7 @@ class Purecharity_Wp_Fundraisers_Public {
                 '.self::grid_funding_stats($fundraiser).'
             </div>
             <ul class="fr-list-actions pure_col pure_span_24">
-              <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More Info</a>
+              <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
               <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
             </ul>
           </div>
