@@ -246,7 +246,7 @@ class Purecharity_Wp_Fundraisers {
 
 		$options = get_option( 'purecharity_fundraisers_settings' );
 
-		if(isset($_GET['slug']) && isset($options['single_view_template']) && $options['single_view_template'] != ''){
+		if(isset($_GET['fundraiser']) && isset($options['single_view_template']) && $options['single_view_template'] != ''){
 			add_action('template_redirect', 'fr_force_template');
 		}
 

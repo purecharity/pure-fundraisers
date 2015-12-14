@@ -19,9 +19,9 @@
 function pc_last_fundraisers($options){
   $base_plugin = new Purecharity_Wp_Base();
 
-  if(isset($_GET['slug'])){
+  if(isset($_GET['fundraiser'])){
     $opt = array();
-    $opt['slug'] = $_GET['slug'];
+    $opt['fundraiser'] = $_GET['fundraiser'];
     return Purecharity_Wp_Fundraisers_Shortcode::fundraiser_shortcode($opt);
   }else{
 
@@ -51,8 +51,8 @@ function pc_last_fundraisers($options){
  *
  * @since    1.0.1
  */
-function pc_fundraiser_info($slug){
+function pc_fundraiser_info($fundraiser){
   $base_plugin = new Purecharity_Wp_Base();
-  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $slug)->fundraiser;
+  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?fundraiser='. $fundraiser)->fundraiser;
   return $tt_fundraiser;
 }
