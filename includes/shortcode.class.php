@@ -195,7 +195,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
     ), $atts );
 
     if ($options['fundraiser']) {
-      $fundraiser = self::$base_plugin->api_call('fundraisers/show?fundraiser='. $options['fundraiser']);
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['fundraiser']);
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;

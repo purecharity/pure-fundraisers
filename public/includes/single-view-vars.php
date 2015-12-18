@@ -12,5 +12,5 @@
 
     $end_date = new DateTime(self::$fundraiser->end_date);
     $today = new DateTime;
-    $date_diff = $today->diff($end_date)->days+1;
+    $date_diff = round(($end_date->format('U') - $today->format('U')) / (60*60*24))+1;
   }
