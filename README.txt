@@ -30,6 +30,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 1.3.3 =
+* Fixed parameter problem and removed date_diff
+
 = 1.3.2 =
 * Changed the parameter name to fundraiser
 
