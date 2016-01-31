@@ -214,14 +214,14 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    * @since    1.2.1
    */
   public static function fundraiser_funding_bar_shortcode($atts)
-  {
+  {          
     $options = shortcode_atts( array(
       'fundraiser' => false,
       'standalone_bar' => true
     ), $atts );
-
     if ($options['fundraiser']) {
-      $fundraiser = self::$base_plugin->api_call('fundraisers/show?fundraiser='. $options['fundraiser']);
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['fundraiser']);
+            
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
