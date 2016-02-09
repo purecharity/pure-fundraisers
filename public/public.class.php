@@ -185,10 +185,10 @@ class Purecharity_Wp_Fundraisers_Public {
       $class = $i&1 ? 'odd' : 'even';
       $i += 1;
       $html .= '
-        <tr class="row '.$class.'  fundraiser_'.$fundraiser->id.'">
+        <tr class="row '.$class.' fundraiser_'.$fundraiser->id.'">
             <td>'.$title.'</td>
             <td>
-              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More Info</a>
+              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
               <a class="donate
               " href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
           </td>
