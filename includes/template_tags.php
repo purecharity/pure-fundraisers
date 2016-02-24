@@ -45,6 +45,19 @@ function pc_last_fundraisers($options){
 }
 
 /**
+ * Fundraisers listing.
+ *
+ * For more information, please refer to the readme.
+ *
+ * @since    1.4
+ */
+function pc_fundraisers(){
+  $options = array();
+  $options['limit'] = 9999;
+  return pc_last_fundraisers($options);
+}
+
+/**
  * Fundraiser info.
  *
  * For more information, please refer to the readme.

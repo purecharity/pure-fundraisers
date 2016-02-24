@@ -164,7 +164,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
 
       if(isset($_GET['query']) && $_GET['query'] != ''){
         $query_var[] = 'query=' . urlencode($_GET['query']);
-      }
+      }     
 
       $fundraisers = self::$base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
 
