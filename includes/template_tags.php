@@ -52,6 +52,8 @@ function pc_last_fundraisers($options){
  * @since    1.4
  */
 function pc_fundraisers(){
+  $base_plugin = new Purecharity_Wp_Base();
+  
   $options = array();
   $options['limit'] = 9999;
 
