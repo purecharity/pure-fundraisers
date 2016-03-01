@@ -52,6 +52,8 @@ function pc_last_fundraisers($options){
  * @since    1.4
  */
 function pc_fundraisers(){
+  $base_plugin = new Purecharity_Wp_Base();
+
   $options = array();
   $options['limit'] = 9999;
   return pc_last_fundraisers($options);
@@ -66,6 +68,6 @@ function pc_fundraisers(){
  */
 function pc_fundraiser_info($fundraiser){
   $base_plugin = new Purecharity_Wp_Base();
-  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?fundraiser='. $fundraiser)->fundraiser;
+  $tt_fundraiser = $base_plugin->api_call('fundraisers/show?slug='. $fundraiser)->fundraiser;
   return $tt_fundraiser;
 }
