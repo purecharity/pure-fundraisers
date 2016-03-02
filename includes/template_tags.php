@@ -53,10 +53,17 @@ function pc_last_fundraisers($options){
  */
 function pc_fundraisers(){
   $base_plugin = new Purecharity_Wp_Base();
-
   $options = array();
   $options['limit'] = 9999;
-  return pc_last_fundraisers($options);
+
+  if(isset($_GET['fundraiser'])){
+    $opt = array();
+    $opt['fundraiser'] = $_GET['fundraiser'];
+    return Purecharity_Wp_Fundraisers_Shortcode::fundraiser_shortcode($opt);
+  }else{
+    return $base_plugin->api_call('external_fundraisers?limit=9999');
+  }
+
 }
 
 /**
