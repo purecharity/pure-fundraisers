@@ -53,8 +53,6 @@ function pc_last_fundraisers($options){
  */
 function pc_fundraisers(){
   $base_plugin = new Purecharity_Wp_Base();
-  $options = array();
-  $options['limit'] = 9999;
 
   if(isset($_GET['fundraiser'])){
     $opt = array();
