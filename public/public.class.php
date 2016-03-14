@@ -172,28 +172,32 @@ class Purecharity_Wp_Fundraisers_Public {
             </tr>
     ';
     $i = 0;
+
+    $used = array();
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
+        }
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.' by '.$fundraiser->owner->name;
+        }
 
-      $title = $fundraiser->name;
-      if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
-        $title = $fundraiser->owner->name;
+        $class = $i&1 ? 'odd' : 'even';
+        $i += 1;
+        $html .= '
+          <tr class="row '.$class.' fundraiser_'.$fundraiser->id.'">
+              <td>'.$title.' - '.$fundraiser->id.'</td>
+              <td>
+                <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
+                <a class="donate
+                " href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+            </td>
+           </tr>
+        ';
       }
-      if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
-        $title = $fundraiser->name.' by '.$fundraiser->owner->name;
-      }
-
-      $class = $i&1 ? 'odd' : 'even';
-      $i += 1;
-      $html .= '
-        <tr class="row '.$class.' fundraiser_'.$fundraiser->id.'">
-            <td>'.$title.'</td>
-            <td>
-              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
-              <a class="donate
-              " href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-          </td>
-         </tr>
-      ';
     }
 
       $html .= '
@@ -219,47 +223,51 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
     $html .= '<div>'; 
 
+    $used = array();
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
 
-      $title = $fundraiser->name;
-      if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
-        $title = $fundraiser->owner->name;
-      }
-      if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
-        $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
-      }
-
-      $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-      $html .= '<div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
-          <div class="fr-grid-list-content">';
-      if ($fundraiser->images->medium == NULL) {
-        $html .= '
-            <div class="fr-listing-avatar-container pure_span24">
-              <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
-            </div>
-          ';
-        }else{
-          $html .= '
-            <div class="fr-listing-avatar-container pure_span24">
-              <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
-            </div>
-
-          ';
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
         }
-        $html .='
-            <div class="fr-grid-item-content pure_col pure_span_24">
-                <div class="fr-grid-title-container">
-                  <p class="fr-grid-title">'.$title.'</p>
-                </div>
-                '.self::grid_funding_stats($fundraiser).'
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
+        }
+
+        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        $html .= '<div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
+            <div class="fr-grid-list-content">';
+        if ($fundraiser->images->medium == NULL) {
+          $html .= '
+              <div class="fr-listing-avatar-container pure_span24">
+                <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
+              </div>
+            ';
+          }else{
+            $html .= '
+              <div class="fr-listing-avatar-container pure_span24">
+                <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
+              </div>
+
+            ';
+          }
+          $html .='
+              <div class="fr-grid-item-content pure_col pure_span_24">
+                  <div class="fr-grid-title-container">
+                    <p class="fr-grid-title">'.$title.'</p>
+                  </div>
+                  '.self::grid_funding_stats($fundraiser).'
+              </div>
+              <ul class="fr-list-actions pure_col pure_span_24">
+                <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
+                <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+              </ul>
             </div>
-            <ul class="fr-list-actions pure_col pure_span_24">
-              <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
-              <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-            </ul>
           </div>
-        </div>
-      ';
+        ';
+      }
     }
 
     $html .= self::list_not_found(false);
@@ -283,33 +291,37 @@ class Purecharity_Wp_Fundraisers_Public {
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container is-grid">';
 
+    $used = array();
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
 
-      $title = $fundraiser->name;
-      if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
-        $title = $fundraiser->owner->name;
-      }
-      if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
-        $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
-      }
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
+        }
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
+        }
 
-      $html .= '
-        <div class="fr-grid-list-item fundraiser_'.$fundraiser->id.'">
-          <div class="fr-grid-list-content">
-            <div class="fr-listing-avatar-container">
-                <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
-              </div>
-            <div class="fr-grid-item-content">
-            <p class="fr-grid-title">'.$title.'</h4>
-            '.self::grid_funding_stats($fundraiser).'
+        $html .= '
+          <div class="fr-grid-list-item fundraiser_'.$fundraiser->id.'">
+            <div class="fr-grid-list-content">
+              <div class="fr-listing-avatar-container">
+                  <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
+                </div>
+              <div class="fr-grid-item-content">
+              <p class="fr-grid-title">'.$title.'</h4>
+              '.self::grid_funding_stats($fundraiser).'
+            </div>
+            <ul class="fr-list-actions">
+              <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More Info</a>
+              <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
+            </ul>
           </div>
-          <ul class="fr-list-actions">
-            <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More Info</a>
-            <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-          </ul>
-        </div>
-        </div>
-      ';
+          </div>
+        ';
+      }      
     }
 
     $html .= self::list_not_found(false);
