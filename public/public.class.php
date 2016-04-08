@@ -87,9 +87,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public function enqueue_styles() {
-
     wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->version, 'all' );
-
   }
 
   /**
@@ -98,9 +96,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public function enqueue_scripts() {
-
     wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public.js', array( 'jquery' ), $this->version, false );
-
   }
 
   /**
@@ -189,7 +185,7 @@ class Purecharity_Wp_Fundraisers_Public {
         $i += 1;
         $html .= '
           <tr class="row '.$class.' fundraiser_'.$fundraiser->id.'">
-              <td>'.$title.' - '.$fundraiser->id.'</td>
+              <td>'.$title.' - '.$fundraiser->campaign_id.'</td>
               <td>
                 <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
                 <a class="donate
@@ -215,15 +211,40 @@ class Purecharity_Wp_Fundraisers_Public {
    *
    * @since    1.0.0
    */
-  public static function listing_grid(){
+  public static function listing_grid($opts){
 
-    $options = get_option( 'purecharity_fundraisers_settings' );
+    $layout = empty($opts['layout']) ? 1 : $opts['layout'];
 
+    self::$options = get_option( 'purecharity_fundraisers_settings' );
+
+    switch ((int) $layout) {
+      case 1:
+        return self::grid_option_1();
+        break;
+      case 2:
+        return self::grid_option_2();
+        break;
+      case 3:
+        return self::grid_option_3();
+        break;
+      default:
+        return self::grid_option_1();
+        break;
+    }
+  }
+
+  /**
+   * Grid listing layout option 1.
+   *
+   * @since    2.0
+   */
+  public static function grid_option_1(){
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
     $html .= '<div>'; 
 
     $used = array();
+    $counter = 1;
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
       if(!in_array($fundraiser->id, $used)){
         array_push($used, $fundraiser->id);
@@ -236,37 +257,197 @@ class Purecharity_Wp_Fundraisers_Public {
           $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
         }
 
-        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-        $html .= '<div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
-            <div class="fr-grid-list-content">';
         if ($fundraiser->images->medium == NULL) {
-          $html .= '
-              <div class="fr-listing-avatar-container pure_span24">
-                <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
-              </div>
-            ';
-          }else{
-            $html .= '
-              <div class="fr-listing-avatar-container pure_span24">
-                <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->medium.')"></div>
-              </div>
+          $image = $fundraiser->images->large;
+        }else{
+          $image = $fundraiser->images->medium;
+        }
 
-            ';
-          }
-          $html .='
-              <div class="fr-grid-item-content pure_col pure_span_24">
-                  <div class="fr-grid-title-container">
-                    <p class="fr-grid-title">'.$title.'</p>
-                  </div>
-                  '.self::grid_funding_stats($fundraiser).'
-              </div>
-              <ul class="fr-list-actions pure_col pure_span_24">
-                <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
-                <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-              </ul>
+        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        $html .= '
+          <div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
+            <div class="fr-grid-list-content">
+        ';
+
+        $html .= '
+          <div class="fr-listing-avatar-container pure_span24">
+            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
+          </div>
+        ';
+
+        $html .='
+          <div class="fr-grid-item-content pure_col pure_span_24">
+            <div class="fr-grid-title-container">
+              <p class="fr-grid-title">'.$title.'</p>
+              <p class="fr-grid-desc">'.strip_tags(truncate($fundraiser->about, 100)).'</p>
+            </div>
+            '.self::grid_funding_stats($fundraiser).'
+          </div>
+          <div class="fr-actions pure_col pure_span_24">
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+          </div>
+        ';
+
+        $html .= '
             </div>
           </div>
         ';
+        if($counter %4 == 0){
+          $html .= '<div class="clearfix"></div>';
+        }
+        $counter ++;
+      }
+    }
+
+    $html .= self::list_not_found(false);
+    $html .= '</div>';
+    $html .= '</div>';
+    $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
+    $html .= Purecharity_Wp_Base_Public::powered_by();
+
+    return $html;
+  }
+
+  /**
+   * Grid listing layout option 2.
+   *
+   * @since    2.0
+   */
+  public static function grid_option_2(){
+    $html = self::print_custom_styles() ;
+    $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
+    $html .= '<div>'; 
+
+    $used = array();
+    $counter = 1;
+    foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
+
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
+        }
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
+        }
+
+        if ($fundraiser->images->medium == NULL) {
+          $image = $fundraiser->images->large;
+        }else{
+          $image = $fundraiser->images->medium;
+        }
+
+        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        $html .= '
+          <div class="fr-grid-list-item pure_span_8 pure_col fundraiser_'.$fundraiser->id.'">
+            <div class="fr-grid-list-content">
+        ';
+
+        $html .= '
+          <div class="fr-listing-avatar-container extended pure_span24">
+            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
+          </div>
+        ';
+
+        $html .='
+          <div class="fr-grid-item-content pure_col pure_span_24">
+            <div class="fr-grid-title-container">
+              <p class="fr-grid-title extended">'.$title.'</p>
+              <p class="fr-grid-desc extended">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
+            </div>
+            '.self::grid_funding_stats($fundraiser, 2).'
+          </div>
+          <div class="fr-actions extended pure_col pure_span_24">
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+          </div>
+        ';
+
+        $html .= '
+            </div>
+          </div>
+        ';
+        if($counter %3 == 0){
+          $html .= '<div class="clearfix"></div>';
+        }
+        $counter ++;
+      }
+    }
+
+    $html .= self::list_not_found(false);
+    $html .= '</div>';
+    $html .= '</div>';
+    $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
+    $html .= Purecharity_Wp_Base_Public::powered_by();
+
+    return $html;
+  }
+
+  /**
+   * Grid listing layout option 3.
+   *
+   * @since    2.0
+   */
+  public static function grid_option_3(){
+    $html = self::print_custom_styles() ;
+    $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
+    $html .= '<div>'; 
+
+    $used = array();
+    $counter = 1;
+    foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
+
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
+        }
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
+        }
+
+        if ($fundraiser->images->medium == NULL) {
+          $image = $fundraiser->images->large;
+        }else{
+          $image = $fundraiser->images->medium;
+        }
+
+        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        $html .= '
+          <div class="fr-grid-list-item pure_span_8 pure_col no-border fundraiser_'.$fundraiser->id.'">
+            <div class="fr-grid-list-content">
+        ';
+
+        $html .= '
+          <div class="fr-listing-avatar-container extended pure_span24">
+            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
+          </div>
+        ';
+
+        $html .='
+          <div class="fr-grid-item-content simplified pure_col pure_span_24">
+            <div class="fr-grid-title-container">
+              <p class="fr-grid-title extended simplified">'.$title.'</p>
+              <p class="fr-grid-desc extended simplified">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
+            </div>
+          </div>
+          <div class="fr-actions extended simplified no-border pure_col pure_span_24">
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+          </div>
+        ';
+
+        $html .= '
+            </div>
+          </div>
+        ';
+        if($counter %3 == 0){
+          $html .= '<div class="clearfix"></div>';
+        }
+        $counter ++;
       }
     }
 
@@ -311,13 +492,14 @@ class Purecharity_Wp_Fundraisers_Public {
                   <div class="fr-listing-avatar" href="#" style="background-image: url('.$fundraiser->images->large.')"></div>
                 </div>
               <div class="fr-grid-item-content">
-              <p class="fr-grid-title">'.$title.'</h4>
+              <p class="fr-grid-title">'.$title.'</p>
+              <p class="fr-grid-desc">'.$fundraiser->about.'</p>
               '.self::grid_funding_stats($fundraiser).'
             </div>
-            <ul class="fr-list-actions">
-              <li><a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More Info</a>
-              <li><a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate Now</a>
-            </ul>
+            <div class="fr-actions pure_col pure_span_24">
+              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+              <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+            </div>
           </div>
           </div>
         ';
@@ -392,20 +574,27 @@ class Purecharity_Wp_Fundraisers_Public {
    *
    * @since    1.0.5
    */
-  public static function grid_funding_stats($fundraiser){
+  public static function grid_funding_stats($fundraiser, $layout = 1){
+    $klass = ($fundraiser->funding_goal != 'anonymous' && ($fundraiser->recurring_funding_goal != NULL && $fundraiser->recurring_funding_goal != 'anonymous')) ? 'pure_span_12' : 'pure_span_24';
     $html = '';
     if($fundraiser->funding_goal != 'anonymous'){
       $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
       $html .= '
-        <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
-          <span>One-time donations:</span>
-        </div>
-        <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
-          <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
-        </div>
-        <div class="fr-grid-stats pure_col pure_span_24">
-          <p>Goal: <strong>$'.number_format($fundraiser->funding_goal, 0, '.', ',').'</strong></p>
-          <p>Raised: <strong>$'.number_format(($fundraiser->funding_goal-$fundraiser->funding_needed), 0, '.', ',').'</strong></p>
+        <div class="pure_col '.$klass.'">
+          <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
+            <span>One-time donations:</span>
+          </div>
+          <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
+            <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
+          </div>
+          <div class="fr-grid-stats '.( $layout == 2 ? 'extended' : '' ).' pure_col pure_span_24">
+            <p>
+              $'.number_format(($fundraiser->funding_goal-$fundraiser->funding_needed), 0, '.', ',').'
+              of
+              $'.number_format($fundraiser->funding_goal, 0, '.', ',').'
+              raised
+            </p>
+          </div>
         </div>
       ';
     }
@@ -413,15 +602,21 @@ class Purecharity_Wp_Fundraisers_Public {
     if($fundraiser->recurring_funding_goal != NULL && $fundraiser->recurring_funding_goal != 'anonymous'){
       $funded = self::percent(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed) ,$fundraiser->recurring_funding_goal);
       $html .= '
-        <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
-          <span>Recurring donations:</span>
-        </div>
-        <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
-          <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
-        </div>
-        <div class="fr-grid-stats pure_col pure_span_24">
-          <p>Goal: <strong>$'.number_format($fundraiser->recurring_funding_goal, 0, '.', ',').'</strong></p>
-          <p>Raised: <strong>$'.number_format(($fundraiser->recurring_funding_goal-$fundraiser->recurring_funding_needed), 0, '.', ',').'</strong></p>
+        <div class="pure_col '.$klass.'">
+          <div class="fr-grid-status-title pure_col pure_span_24" title="'.$funded.'">
+            <span>Recurring donations:</span>
+          </div>
+          <div class="fr-grid-status pure_col pure_span_24" title="'.$funded.'">
+            <div class="fr-grid-progress" style="width:'.$funded.'%"></div>
+          </div>
+          <div class="fr-grid-stats '.( $layout == 2 ? 'extended' : '' ).' pure_col pure_span_24">
+            <p>
+              $'.number_format(($fundraiser->funding_goal-$fundraiser->funding_needed), 0, '.', ',').'
+              of
+              $'.number_format($fundraiser->funding_goal, 0, '.', ',').'
+              raised
+            </p>
+          </div>
         </div>
       ';
     }

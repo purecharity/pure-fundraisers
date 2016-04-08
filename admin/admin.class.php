@@ -99,7 +99,8 @@ class Purecharity_Wp_Fundraisers_Admin {
 		);
 
 		add_settings_field( 
-			'single_view_template', __( 'Single view template', 'wordpress' ), 
+			'single_view_template', 
+			__( 'Single view template', 'wordpress' ), 
 			array('Purecharity_Wp_Fundraisers_Admin', 'single_view_template_render'), 
 			'pfPluginPage', 
 			'purecharity_fundraisers_pfPluginPage_section' 

@@ -132,8 +132,10 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'per_page' => get_query_var('per_page'),
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
-      'hide_search' => get_query_var('hide_search')
+      'hide_search' => get_query_var('hide_search'),
+      'layout' => get_query_var('layout') # [1, 2, 3]
     ), $atts );
+
     if(isset($_GET['fundraiser'])){
       $opt = array();
       $opt['fundraiser'] = $_GET['fundraiser'];
@@ -172,7 +174,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
         Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         if($options['grid'] == 'true'){
-          return Purecharity_Wp_Fundraisers_Public::listing_grid();
+          return Purecharity_Wp_Fundraisers_Public::listing_grid($options);
         }else{
           return Purecharity_Wp_Fundraisers_Public::listing();
         }
