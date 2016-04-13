@@ -219,7 +219,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
     switch ((int) $layout) {
       case 1:
-        return self::grid_option_1();
+        return self::grid_option_3();
         break;
       case 2:
         return self::grid_option_2();
@@ -294,7 +294,7 @@ class Purecharity_Wp_Fundraisers_Public {
           </div>
         ';
         if($counter %4 == 0){
-          $html .= '<div class="clearfix"></div>';
+          $html .= '<hr class="hidden"></hr>';
         }
         $counter ++;
       }

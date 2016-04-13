@@ -1,4 +1,4 @@
-
+.clearfix { clear:both; }
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -6,7 +6,8 @@
 }
 .clearfix:after {
   clear: both;
-} 
+}
+hr.hidden { visibility: none; } 
 .no-border { border: none !important; }
 fieldset.fr-livefilter {
   float: left;
@@ -204,7 +205,7 @@ fieldset.fr-livefilter {
   font-size: 0.8em;
 }
 .fr-grid-stats.extended {
-  margin: 0 0 10px 0;
+  margin: 10px 0;
 }
 
 .fr-grid-stats p {
@@ -227,14 +228,18 @@ fieldset.fr-livefilter {
 }
 
 .fr-grid-list-item .fr-actions.simplified {
-  padding: 0 !important;
+  padding: 10px 0 40px 0 !important;
 }
 
 .fr-grid-list-item .fr-actions a {
   margin: 0;
-  font-size: 0.8em;
+  font-size: 1em;
   padding: 0 15px;
   border-right: 1px solid #EEE;
+}
+
+.fr-grid-list-item .fr-actions.extended a {
+  margin-top: 10px;
 }
 
 .fr-grid-list-item .fr-actions.simplified a:first-child {
