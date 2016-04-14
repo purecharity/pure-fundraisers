@@ -219,7 +219,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
     switch ((int) $layout) {
       case 1:
-        return self::grid_option_3();
+        return self::grid_option_1();
         break;
       case 2:
         return self::grid_option_2();
