@@ -360,7 +360,7 @@ class Purecharity_Wp_Fundraisers_Public {
             '.self::grid_funding_stats($fundraiser, 2).'
           </div>
           <div class="fr-actions extended pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
             <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
           </div>
         ';
@@ -435,7 +435,7 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
           </div>
           <div class="fr-actions extended simplified no-border pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
             <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
           </div>
         ';
@@ -497,7 +497,7 @@ class Purecharity_Wp_Fundraisers_Public {
               '.self::grid_funding_stats($fundraiser).'
             </div>
             <div class="fr-actions pure_col pure_span_24">
-              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+              <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
               <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
             </div>
           </div>
