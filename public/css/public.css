@@ -1,3 +1,13 @@
+.clearfix { clear:both; }
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+hr.hidden { visibility: none; } 
 .no-border { border: none !important; }
 fieldset.fr-livefilter {
   float: left;
@@ -96,7 +106,8 @@ fieldset.fr-livefilter {
 }
 
 .fr-grid-list-item {
-  background: #EEEEEE;
+  background: #FFF;
+  border: 1px solid #EEE;
   box-sizing: border-box;
   padding: 0px;
   margin-bottom: 20px;
@@ -123,9 +134,16 @@ fieldset.fr-livefilter {
   background-size: cover;
   background-position: center;
 }
+.fr-listing-avatar-container.extended .fr-listing-avatar {
+  height: 200px;
+}
 
 .fr-grid-item-content {
-  padding: 0 20px 20px 20px;
+  padding: 0 20px;
+}
+
+.fr-grid-item-content.simplified {
+  padding: 0 !important;
 }
 
 .fr-grid-title-container {
@@ -135,7 +153,31 @@ fieldset.fr-livefilter {
 .fr-grid-list-item p.fr-grid-title {
   box-sizing: border-box;
   font-weight: bold;
-  margin: 15px 0; /* override theme css to keep sizing of box */
+  font-size: 0.9em;
+  margin: 15px 0; 
+}
+
+.fr-grid-list-item p.fr-grid-title.simplified {
+  box-sizing: border-box;
+  font-weight: bold;
+  margin: 8px 0 0 0; 
+}
+
+.fr-grid-list-item p.fr-grid-desc {
+  box-sizing: border-box;
+  font-weight: normal;
+  font-size: 0.8em;
+  margin: 15px 0; 
+}
+
+.fr-grid-list-item p.fr-grid-desc.simplified {
+  margin: 3px 0 0 0; 
+}
+
+
+.fr-grid-list-item p.fr-grid-title.extended,
+.fr-grid-list-item p.fr-grid-desc.extended {
+  text-align: left !important;
 }
 
 .fr-grid-status {
@@ -144,12 +186,9 @@ fieldset.fr-livefilter {
   background: #ccc;
   height: 12px;
   display: block;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
 }
 .fr-grid-status-title{
-  font-size: 10px;
+  font-size: 0.8em;
 }
 .fr-grid-status-title:nth-of-type(5){
   margin-top: 20px;
@@ -159,64 +198,58 @@ fieldset.fr-livefilter {
   background: #CA663A;
   height: 100%;
   display: block;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .fr-grid-stats {
   margin: 10px 0 0 0;
+  font-size: 0.8em;
+}
+.fr-grid-stats.extended {
+  margin: 10px 0;
 }
 
 .fr-grid-stats p {
   margin: 0; /* this overrides any theme paragraph formatting css */
   font-size: .9em;
+  font-style: italic;
 }
 
-.fr-grid-list-item ul.fr-list-actions {
+.fr-grid-list-item .fr-actions {
   float: left;
   list-style: none;
-  padding: 0;
+  padding: 15px 0;
   margin: 0;
-  background: #E11E1;
-  border-top: 1px solid #fff;
-}
-
-.fr-grid-list-item ul.fr-list-actions li {
-  list-style: none;
-  width: 49.5%;
-  margin: 0;
-  float: left;
-  font-size: .9em;
   text-align: center;
-  font-weight: bold;
 }
 
-.fr-grid-list-item ul.fr-list-actions li:first-child {
-  border-right: 1px solid #fff;
-}
-.fr-grid-list-item ul.fr-list-actions li:last-child {
-  float: right;
+.fr-grid-list-item .fr-actions.extended {
+  border-top: 1px solid #eee;
+  text-align: left;
 }
 
-.fr-grid-list-item ul.fr-list-actions li a {
-  padding: 15px 5px;
-  display: block;
+.fr-grid-list-item .fr-actions.simplified {
+  padding: 10px 0 40px 0 !important;
 }
 
-.fr-grid-list-item ul.fr-list-actions li a:hover {
-  background: #CA663A;
-  color: #fff !important;
+.fr-grid-list-item .fr-actions a {
+  margin: 0;
+  font-size: 1em;
+  padding: 0 15px;
+  border-right: 1px solid #EEE;
 }
+
+.fr-grid-list-item .fr-actions.extended a {
+  margin-top: 10px;
+}
+
+.fr-grid-list-item .fr-actions.simplified a:first-child {
+  padding-left: 0 !important;
+}
+
+.fr-grid-list-item .fr-actions a:last-child {
+  border: none;
+}
+
 
 .fr-container {
   float: left;
@@ -373,27 +406,12 @@ a.fr-pure-button {
   background: #ccc;
   height: 12px;
   display: block;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
 }
 
 .fr-single-progress {
   background: #CA663A;
   height: 100%;
   display: block;
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .fr-raised {
