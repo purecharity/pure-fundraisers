@@ -25,9 +25,13 @@ function pc_last_fundraisers($options){
     return Purecharity_Wp_Fundraisers_Shortcode::fundraiser_shortcode($opt);
   }else{
 
-    $query_var = array();
 
-    if(isset($options['limit']) && $options['limit'] != ''){
+    $query_var = array();
+    if(!empty($options['query'])){
+      $query_var[] = 'query=' . urlencode($options['query']);
+    }
+
+    if(!empty($options['limit'])){
       $query_var[] = 'limit='.$options['limit'];
     }else{
       $query_var[] = 'limit=4';
