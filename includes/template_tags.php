@@ -55,7 +55,7 @@ function pc_last_fundraisers($options){
  *
  * @since    1.4
  */
-function pc_fundraisers(){
+function pc_fundraisers($options){
   $base_plugin = new Purecharity_Wp_Base();
 
   if(isset($_GET['fundraiser'])){
@@ -63,7 +63,12 @@ function pc_fundraisers(){
     $opt['fundraiser'] = $_GET['fundraiser'];
     return Purecharity_Wp_Fundraisers_Shortcode::fundraiser_shortcode($opt);
   }else{
-    return $base_plugin->api_call('external_fundraisers?limit=9999');
+    $query_var = array();
+    if(!empty($options['query'])){
+      $query_var[] = 'query=' . urlencode($options['query']);
+    }
+    $query_var[] = 'limit=9999';
+    return $base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
   }
 
 }
