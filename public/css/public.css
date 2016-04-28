@@ -8,7 +8,7 @@
   clear: both;
 }
 .overlay-link { width: 100%; height: 100%; float: left; }
-hr.hidden { visibility: none; } 
+hr.hidden { visibility: none; clear: both; } 
 .no-border { border: none !important; }
 fieldset.fr-livefilter {
   float: left;
