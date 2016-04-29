@@ -126,7 +126,11 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function live_search(){
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    if(isset($options["live_filter"]) && (isset(self::$options['hide_search']) && self::$options['hide_search'] != 'true')){
+
+    // var_dump($options);
+    // exit;
+
+    if(isset($options["live_filter"]) && (empty(self::$options['hide_search']) || self::$options['hide_search'] != 'true')){
       $html = '
         <div class="fr-filtering">
           <form method="get">
@@ -272,7 +276,7 @@ class Purecharity_Wp_Fundraisers_Public {
         $html .= '
           <div class="fr-listing-avatar-container pure_span24">
             <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
-              <a href="?fundraiser='.$fundraiser->fundraiser.'" class="overlay-link"></a>
+              <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
             </div>
           </div>
         ';
@@ -286,7 +290,7 @@ class Purecharity_Wp_Fundraisers_Public {
             '.self::grid_funding_stats($fundraiser).'
           </div>
           <div class="fr-actions pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
             <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
           </div>
         ';
@@ -347,7 +351,7 @@ class Purecharity_Wp_Fundraisers_Public {
             <div class="fr-grid-list-content">
               <div class="fr-listing-avatar-container extended pure_span24">
                 <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
-                  <a href="?fundraiser='.$fundraiser->fundraiser.'" class="overlay-link"></a>
+                  <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
                 </div>
               </div>
               <div class="fr-grid-item-content pure_col pure_span_24">
@@ -416,7 +420,7 @@ class Purecharity_Wp_Fundraisers_Public {
             <div class="fr-grid-list-content">
               <div class="fr-listing-avatar-container extended pure_span24">
                 <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
-                  <a href="?fundraiser='.$fundraiser->fundraiser.'" class="overlay-link"></a>
+                  <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
                 </div>
               </div>
               <div class="fr-grid-item-content simplified pure_col pure_span_24">

@@ -114,7 +114,7 @@ class Purecharity_Wp_Fundraisers_Admin {
 		);
 
 		add_settings_field( 
-			'live_filter', __( 'Display Live Filter', 'wordpress' ), 
+			'live_filter', __( 'Display Filter', 'wordpress' ), 
 			array('Purecharity_Wp_Fundraisers_Admin', 'live_filter_render'), 
 			'pfPluginPage', 
 			'purecharity_fundraisers_display_pfPluginPage_section' 
