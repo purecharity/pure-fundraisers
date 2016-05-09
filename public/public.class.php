@@ -185,7 +185,7 @@ class Purecharity_Wp_Fundraisers_Public {
         $i += 1;
         $html .= '
           <tr class="row '.$class.' fundraiser_'.$fundraiser->id.'">
-              <td>'.$title.' - '.$fundraiser->campaign_id.'</td>
+              <td>'.$title.'</td>
               <td>
                 <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More Info</a>
                 <a class="donate
