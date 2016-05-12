@@ -126,7 +126,11 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function live_search(){
 
     $options = get_option( 'purecharity_fundraisers_settings' );
-    if(isset($options["live_filter"]) && (isset(self::$options['hide_search']) && self::$options['hide_search'] != 'true')){
+
+    // var_dump($options);
+    // exit;
+
+    if(isset($options["live_filter"]) && (empty(self::$options['hide_search']) || self::$options['hide_search'] != 'true')){
       $html = '
         <div class="fr-filtering">
           <form method="get">
@@ -271,7 +275,9 @@ class Purecharity_Wp_Fundraisers_Public {
 
         $html .= '
           <div class="fr-listing-avatar-container pure_span24">
-            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
+            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
+              <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
+            </div>
           </div>
         ';
 
@@ -284,7 +290,7 @@ class Purecharity_Wp_Fundraisers_Public {
             '.self::grid_funding_stats($fundraiser).'
           </div>
           <div class="fr-actions pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->fundraiser.'">More</a>
+            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
             <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
           </div>
         ';
@@ -343,29 +349,22 @@ class Purecharity_Wp_Fundraisers_Public {
         $html .= '
           <div class="fr-grid-list-item pure_span_8 pure_col fundraiser_'.$fundraiser->id.'">
             <div class="fr-grid-list-content">
-        ';
-
-        $html .= '
-          <div class="fr-listing-avatar-container extended pure_span24">
-            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
-          </div>
-        ';
-
-        $html .='
-          <div class="fr-grid-item-content pure_col pure_span_24">
-            <div class="fr-grid-title-container">
-              <p class="fr-grid-title extended">'.$title.'</p>
-              <p class="fr-grid-desc extended">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
-            </div>
-            '.self::grid_funding_stats($fundraiser, 2).'
-          </div>
-          <div class="fr-actions extended pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
-            <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
-          </div>
-        ';
-
-        $html .= '
+              <div class="fr-listing-avatar-container extended pure_span24">
+                <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
+                  <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
+                </div>
+              </div>
+              <div class="fr-grid-item-content pure_col pure_span_24">
+                <div class="fr-grid-title-container">
+                  <p class="fr-grid-title extended">'.$title.'</p>
+                  <p class="fr-grid-desc extended">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
+                </div>
+                '.self::grid_funding_stats($fundraiser, 2).'
+              </div>
+              <div class="fr-actions extended pure_col pure_span_24">
+                <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
+                <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+              </div>
             </div>
           </div>
         ';
@@ -419,28 +418,21 @@ class Purecharity_Wp_Fundraisers_Public {
         $html .= '
           <div class="fr-grid-list-item pure_span_8 pure_col no-border fundraiser_'.$fundraiser->id.'">
             <div class="fr-grid-list-content">
-        ';
-
-        $html .= '
-          <div class="fr-listing-avatar-container extended pure_span24">
-            <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')"></div>
-          </div>
-        ';
-
-        $html .='
-          <div class="fr-grid-item-content simplified pure_col pure_span_24">
-            <div class="fr-grid-title-container">
-              <p class="fr-grid-title extended simplified">'.$title.'</p>
-              <p class="fr-grid-desc extended simplified">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
-            </div>
-          </div>
-          <div class="fr-actions extended simplified no-border pure_col pure_span_24">
-            <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
-            <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
-          </div>
-        ';
-
-        $html .= '
+              <div class="fr-listing-avatar-container extended pure_span24">
+                <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
+                  <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
+                </div>
+              </div>
+              <div class="fr-grid-item-content simplified pure_col pure_span_24">
+                <div class="fr-grid-title-container">
+                  <p class="fr-grid-title extended simplified">'.$title.'</p>
+                  <p class="fr-grid-desc extended simplified">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
+                </div>
+              </div>
+              <div class="fr-actions extended simplified no-border pure_col pure_span_24">
+                <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
+                <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
+              </div>
             </div>
           </div>
         ';
