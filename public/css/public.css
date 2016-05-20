@@ -8,7 +8,7 @@
   clear: both;
 }
 .overlay-link { width: 100%; height: 100%; float: left; }
-hr.hidden { visibility: hidden; clear: both; } 
+hr.hidden { visibility: hidden; clear: both; }
 .no-border { border: none !important; }
 fieldset.fr-livefilter {
   float: left;
@@ -113,7 +113,7 @@ fieldset.fr-livefilter {
   padding: 0px;
   margin-bottom: 20px;
 }
-.fr-list-container .fr-grid-list-item:nth-of-type(4n+5) {  
+.fr-list-container .fr-grid-list-item:nth-of-type(4n+5) {
   clear: left;
 }
 
@@ -155,24 +155,24 @@ fieldset.fr-livefilter {
   box-sizing: border-box;
   font-weight: bold;
   font-size: 0.9em;
-  margin: 15px 0; 
+  margin: 15px 0;
 }
 
 .fr-grid-list-item p.fr-grid-title.simplified {
   box-sizing: border-box;
   font-weight: bold;
-  margin: 8px 0 0 0; 
+  margin: 8px 0 0 0;
 }
 
 .fr-grid-list-item p.fr-grid-desc {
   box-sizing: border-box;
   font-weight: normal;
   font-size: 0.8em;
-  margin: 15px 0; 
+  margin: 15px 0;
 }
 
 .fr-grid-list-item p.fr-grid-desc.simplified {
-  margin: 3px 0 0 0; 
+  margin: 3px 0 0 0;
 }
 
 
@@ -726,10 +726,6 @@ ul.fr-backers li .fr-backer-name {
     margin-right: 5px;
   }
 
-  .fr-grid-item-content {
-    height: 150px;
-  }
-
   .mobile-visible { display:block !important; }
   .mobile-hidden { display:none !important; }
 
@@ -767,4 +763,3 @@ ul.fr-backers li .fr-backer-name {
 
 
 }
- 
