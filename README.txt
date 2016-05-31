@@ -30,6 +30,9 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 2.1.1 =
+* Minor bugfix
+
 = 2.1 =
 * Added search to template tag
 

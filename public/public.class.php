@@ -548,7 +548,7 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
             <div class="fr-donate pure_col pure_span_6">
               <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
-              '. (isset($options['updates_tab']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
+              '. (isset($options['fundraise_cause']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
             </div>
           </div>
           '. self::single_view_funding_bar() .'
