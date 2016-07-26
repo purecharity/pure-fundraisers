@@ -142,7 +142,7 @@ class Purecharity_Wp_Fundraisers_Public {
               </legend>
               <input id="livefilter-input" class="fr-livefilter-input" value="'.@$_GET['query'].'" name="query" type="text">
               <button class="fr-filtering-button" type="submit">Filter</button>
-              '. (@$_GET['query'] != '' ? '<a href="#" onclick="$(this).prev().prev().val(\'\'); $(this).parents(\'form\').submit(); return false;">Clear filter</a>' : '') .'
+              '. (@$_GET['query'] != '' ? '<a href="#" onclick="jQuery(this).prev().prev().val(\'\'); jQuery(this).parents(\'form\').submit(); return false;">Clear filter</a>' : '') .'
             </fieldset>
           </form>
         </div>
