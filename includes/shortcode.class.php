@@ -77,7 +77,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
     ), $atts );
     if(isset($_GET['fundraiser'])){
       $opt = array();
-      $opt['fundraiser'] = $_GET['fundraiser'];
+      $opt['slug'] = $_GET['fundraiser'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -138,7 +138,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
 
     if(isset($_GET['fundraiser'])){
       $opt = array();
-      $opt['fundraiser'] = $_GET['fundraiser'];
+      $opt['slug'] = $_GET['fundraiser'];
       $opt['title'] = $options['title'];
       return self::fundraiser_shortcode($opt);
     }else{
