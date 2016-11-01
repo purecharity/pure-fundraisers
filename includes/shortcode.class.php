@@ -192,7 +192,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public static function fundraiser_shortcode($atts)
   {
     $options = shortcode_atts( array(
-      'slug' => false,
+      'slug' => get_query_var('slug'),
       'title' => get_query_var('title')
     ), $atts );
 
@@ -206,7 +206,6 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       }else{
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
-
     }
   }
 
