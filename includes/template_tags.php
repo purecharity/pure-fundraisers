@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Template tags for fundraisers
  *
@@ -31,19 +31,18 @@ function pc_last_fundraisers($options){
       $query_var[] = 'query=' . urlencode($options['query']);
     }
 
+    $query_var[] = 'limit=4';
     if(!empty($options['limit'])){
       $query_var[] = 'limit='.$options['limit'];
-    }else{
-      $query_var[] = 'limit=4';
     }
-    
+
     $fundraisers = $base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
 
     if ($fundraisers && count($fundraisers) > 0) {
-      Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers; 
+      Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
       return Purecharity_Wp_Fundraisers_Public::listing_last_grid();
     }else{
-      return Purecharity_Wp_Fundraisers_Public::list_not_found();        
+      return Purecharity_Wp_Fundraisers_Public::list_not_found();
     };
   }
 }
@@ -67,7 +66,11 @@ function pc_fundraisers($options){
     if(!empty($options['query'])){
       $query_var[] = 'query=' . urlencode($options['query']);
     }
+
     $query_var[] = 'limit=9999';
+    if(!empty($options['limit'])){
+      $query_var[] = 'limit='.$options['limit'];
+    }
     return $base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
   }
 

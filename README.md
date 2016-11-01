@@ -14,24 +14,6 @@ In order to install the plugin:
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. You're done!
 
-## Template Tags
-
-### Last Fundraisers
-
-Function:
-`pc_last_fundraisers()`
-
-Parameters:
-
-The parameters are passed as an array.
-
-```php
- $options = array();
- $options['param'] = 'value';
-```
-
-Possible parameters:
-* `limit` - Defaults to 4. Set the number of fundraisers to show
 
 ## Shortcodes
 
@@ -64,3 +46,55 @@ Possible parameters:
 Possible parameters:
 * `slug` - (required) The slug of the fundraiser on the Pure Charity app.
 * `title` - (founder_name|title_and_owner_name) What to use on the title of the fundraisers. If not present, uses the fundraiser's title
+
+
+## Template Tags
+
+### Fundraisers
+
+> Returns a JSON string with the fundraisers requested
+
+Function:
+`pc_fundraisers()`
+
+Parameters:
+
+The parameters are passed as an array.
+
+```php
+ $options = array();
+ $options['param'] = 'value';
+```
+
+Possible parameters:
+* `limit` - Defaults to 9999. Set the number of fundraisers to show
+
+### Last Fundraisers
+
+> Returns HTML ready for use
+
+Function:
+`pc_last_fundraisers()`
+
+Parameters:
+
+The parameters are passed as an array.
+
+```php
+ $options = array();
+ $options['param'] = 'value';
+```
+
+Possible parameters:
+* `limit` - Defaults to 4. Set the number of fundraisers to show
+
+### Fundraiser Info
+
+> Returns JSON information for the fundraiser requested
+
+Function:
+`pc_fundraiser_info($slug)`
+
+Parameters:
+
+`$slug`: The fundraiser's slug
