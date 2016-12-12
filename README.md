@@ -24,6 +24,7 @@ Possible parameters:
 * `grid` - (true|false) Defaults to false. Set to true to enable the alternative grid view
 * `title` - (founder_name|title_and_owner_name) What to use on the title of the fundraisers. If not present, uses the fundraiser's title
 * `campaign` - Campaign slug to pull fundraisers from
+* `field_partner_slug` - Filter result data by this field.
 * `layout` - (1|2|3) Defaults to 1. 1) 4 columns, 2) 3 columns, 3) simplified 3 columns
 * `per_page` - The amount of records to fetch per page
 * `order` - (title|name|last_name|date) Sort by name, last name or date
