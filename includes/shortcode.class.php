@@ -123,17 +123,17 @@ class Purecharity_Wp_Fundraisers_Shortcode {
      */
     public static function fundraisers_shortcode( $atts ) {
         $options = shortcode_atts( array(
-            'fundraiser'    => false,
-            'query'         => get_query_var( 'query' ),
-            'grid'          => get_query_var( 'grid' ),
-            'title'         => get_query_var( 'title' ),
-            'partner_slug'  => get_query_var( 'partner_slug' ),
-            'campaign'      => get_query_var( 'campaign' ),
-            'per_page'      => get_query_var( 'per_page' ),
-            'dir'           => get_query_var( 'dir' ),
-            'order'         => get_query_var( 'order' ),
-            'hide_search'   => get_query_var( 'hide_search' ),
-            'layout'        => get_query_var( 'layout' ) # [1, 2, 3]
+            'fundraiser'            => false,
+            'query'                 => get_query_var( 'query' ),
+            'grid'                  => get_query_var( 'grid' ),
+            'title'                 => get_query_var( 'title' ),
+            'field_partner_slug'    => get_query_var( 'field_partner_slug' ),
+            'campaign'              => get_query_var( 'campaign' ),
+            'per_page'              => get_query_var( 'per_page' ),
+            'dir'                   => get_query_var( 'dir' ),
+            'order'                 => get_query_var( 'order' ),
+            'hide_search'           => get_query_var( 'hide_search' ),
+            'layout'                => get_query_var( 'layout' ) # [1, 2, 3]
         ), $atts );
 
         if( isset( $_GET['fundraiser'] ) ) {
@@ -176,9 +176,9 @@ class Purecharity_Wp_Fundraisers_Shortcode {
             $fundraisers = self::$base_plugin->api_call( 'external_fundraisers?' . join( '&', $query_var ) );
             
             if( $fundraisers && count( $fundraisers ) > 0 ) {
-                if( isset( $options['partner_slug'] ) && $options['partner_slug'] != '') {
+                if( isset( $options['field_partner_slug'] ) && $options['field_partner_slug'] != '') {
                     foreach( $fundraisers->external_fundraisers as $k => $item ) {
-                        if( $item->field_partner_slug != $options['partner_slug'] ) {
+                        if( $item->field_partner_slug != $options['field_partner_slug'] ) {
                             unset( $fundraisers->external_fundraisers[$k] );
                         }
                     }
