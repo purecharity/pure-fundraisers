@@ -69,7 +69,9 @@ class Purecharity_Wp_Fundraisers_Paginator {
       if($key == '' || $value == ''){ continue; }
       $sanitized[$key] = $value;
     }
-    if(!isset($sanitized['per_page'])){ $sanitized['per_page'] = self::DEFAULT_PER_PAGE; }
+    if(!isset($sanitized['per_page'])){ 
+      $sanitized['per_page'] = self::DEFAULT_PER_PAGE; 
+    }
     
     return $sanitized;
   }
