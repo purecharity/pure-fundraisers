@@ -511,71 +511,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= self::list_not_found(false);
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
-
-
-
-    # --------------------------------------------------------------------
-
-
-
-    // $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
-    // $html .= '<div>'; 
-
-    // $used = array();
-    // $counter = 1;
-    // foreach(self::$fundraisers->external_fundraisers as $fundraiser){
-    //   if(!in_array($fundraiser->id, $used)){
-    //     array_push($used, $fundraiser->id);
-
-    //     $title = $fundraiser->name;
-    //     if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
-    //       $title = $fundraiser->owner->name;
-    //     }
-    //     if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
-    //       $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
-    //     }
-
-    //     if ($fundraiser->images->medium == NULL) {
-    //       $image = $fundraiser->images->large;
-    //     }else{
-    //       $image = $fundraiser->images->medium;
-    //     }
-
-    //     $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-    //     $html .= '
-    //       <div class="fr-grid-list-item pure_span_8 pure_col no-border fundraiser_'.$fundraiser->id.'">
-    //         <div class="fr-grid-list-content">
-    //           <div class="fr-listing-avatar-container extended pure_span24">
-    //             <div class="fr-listing-avatar" href="#" style="background-image: url('.$image.')">
-    //               <a href="?fundraiser='.$fundraiser->slug.'" class="overlay-link"></a>
-    //             </div>
-    //           </div>
-    //           <div class="fr-grid-item-content simplified pure_col pure_span_24">
-    //             <div class="fr-grid-title-container">
-    //               <p class="fr-grid-title extended simplified">'.$title.'</p>
-    //               <p class="fr-grid-desc extended simplified">'.strip_tags(truncate($fundraiser->about, 150)).'</p>
-    //             </div>
-    //           </div>
-    //           <div class="fr-actions extended simplified no-border pure_col pure_span_24">
-    //             <a class="fr-themed-link" href="?fundraiser='.$fundraiser->slug.'">More</a>
-    //             <a class="fr-themed-link" target="_blank" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund">Donate</a>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     ';
-    //     if($counter %3 == 0){
-    //       $html .= '<div class="clearfix"></div>';
-    //     }
-    //     $counter ++;
-    //   }
-    // }
-
-    // $html .= self::list_not_found(false);
-    // $html .= '</div>';
-    // $html .= '</div>';
-    // $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
-    // $html .= Purecharity_Wp_Base_Public::powered_by();
-
+    
     return $html;
   }
 
