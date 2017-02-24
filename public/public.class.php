@@ -480,10 +480,10 @@ class Purecharity_Wp_Fundraisers_Public {
           $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
         }
 
-        if ($fundraiser->images->medium == NULL) {
-          $image = $fundraiser->images->large;
-        }else{
+        if ($fundraiser->images->large == NULL) {
           $image = $fundraiser->images->medium;
+        }else{
+          $image = $fundraiser->images->large;
         }
 
         $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
