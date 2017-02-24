@@ -73,11 +73,13 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
       'title' => get_query_var('title'),
-      'limit' => get_query_var('limit')
+      'limit' => get_query_var('limit'),
+      'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
     if(isset($_GET['fundraiser'])){
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
+      $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -133,13 +135,14 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
       'hide_search' => get_query_var('hide_search'),
-      'layout' => get_query_var('layout') # [1, 2, 3]
+      'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
 
     if(isset($_GET['fundraiser'])){
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
       $opt['title'] = $options['title'];
+      $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -193,7 +196,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   {
     $options = shortcode_atts( array(
       'slug' => get_query_var('slug'),
-      'title' => get_query_var('title')
+      'title' => get_query_var('title'),
+      'layout' => get_query_var('layout')
     ), $atts );
 
     if ($options['slug']) {
