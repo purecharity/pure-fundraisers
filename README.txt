@@ -30,9 +30,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
+= 2.4 =
+* Adding new shortcode [fundraisers_search]
+
 = 2.3 =
 * Bugfix on listing shortcode call
-
 
 = 2.2 =
 * Bugfix

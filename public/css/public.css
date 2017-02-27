@@ -1,3 +1,11 @@
+.fundraisers-search-form input[type="text"],
+.fundraisers-search-form button {
+  display: inline-table;
+  vertical-align: middle;
+}
+.fundraisers-search-form input[type="text"] {
+  width:auto;
+}
 .fr-list-container .clearfix { clear:both; }
 .fr-list-container .clearfix:before,
 .fr-list-container .clearfix:after {

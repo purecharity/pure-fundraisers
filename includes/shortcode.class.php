@@ -52,6 +52,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   {
     if(Purecharity_Wp_Fundraisers::base_present()){
       add_shortcode('fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraisers_shortcode'));
+      add_shortcode('fundraisers_search', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraisers_search_shortcode'));
       add_shortcode('last_fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'last_fundraisers_shortcode'));
       add_shortcode('fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_shortcode'));
       add_shortcode('fundraiser_funding_bar', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_funding_bar_shortcode'));
@@ -115,6 +116,31 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       };
     }
   }
+
+    /**
+     * Initialize the Fundraisers Search shortcode.
+     *
+     * @since    2.4.0
+     */
+
+    public static function fundraisers_search_shortcode($atts)
+    {
+        $options = shortcode_atts([
+            'page_id' => get_query_var('page_id')
+        ], $atts);
+
+        if ($options['page_id'] != 0 && get_permalink($options['page_id'])) {
+            $html = '
+            <form class="fundraisers-search-form" action="' . get_permalink($options['page_id']) . '">
+                <input type="text" name="query" placeholder="Search for an Adopting Family">
+                <button type="submit">Search</button>
+            </form>';
+        } else {
+            $html = 'Sorry but you need to set page id where exist fundraisers plugin';
+        }
+
+        return $html;
+    }
 
   /**
    * Initialize the Fundraisers Listing shortcode.
