@@ -493,7 +493,7 @@ class Purecharity_Wp_Fundraisers_Public {
               <a href="?fundraiser='. $fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
               </a>
               <div class="caption">
-                <h3><a href="?fundraiser=<?php echo $fundraiser->slug; ?>">'. $title .'</a></h3>
+                <h3><a href="?fundraiser='. $fundraiser->slug; .'">'. $title .'</a></h3>
                 <span class="location">is adopting from '. $fundraiser->country .'</span>
                 <span class="raised">'. money_format('$%i', $fundraiser->funding_goal-$fundraiser->funding_needed).' Raised</span>
               </div>
