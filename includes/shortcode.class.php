@@ -120,7 +120,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
     /**
      * Initialize the Fundraisers Search shortcode.
      *
-     * @since    2.4.0
+     * @since    2.5.0
      */
 
     public static function fundraisers_search_shortcode($atts)
