@@ -516,6 +516,48 @@ class Purecharity_Wp_Fundraisers_Public {
   }
 
   /**
+   * Single fundraiser list item - layout 4
+   *
+   * @since    2.4
+   */
+  public static function featured_fundraiser(){
+
+    $used = array();
+    $counter = 1;
+
+    $title = self::$fundraiser->name;
+    if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+      $title = self::$fundraiser->owner->name;
+    }
+    if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+      $title = self::$fundraiser->name.'<br /> by '.self::$fundraiser->owner->name;
+    }
+
+    if (self::$fundraiser->images->large == NULL) {
+      $image = self::$fundraiser->images->medium;
+    }else{
+      $image = self::$fundraiser->images->large;
+    }
+
+    $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
+    $html .= '    
+      <div class="pure_span_8 pure_col no-border fundraiser_'.self::$fundraiser->id.'"">
+        <div class="family">
+          <a href="?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
+          </a>
+          <div class="caption">
+            <h3><a href="?fundraiser=<?php echo self::$fundraiser->slug; ?>">'. $title .'</a></h3>
+            <span class="location">is adopting from '. self::$fundraiser->country .'</span>
+            <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
+          </div>
+        </div>
+      </div>
+    ';
+    
+    return $html;
+  }
+
+  /**
    * List of Last Fundraisers.
    *
    * @since    1.0.1
