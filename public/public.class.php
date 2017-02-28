@@ -624,9 +624,9 @@ class Purecharity_Wp_Fundraisers_Public {
       $title = self::$fundraiser->name.' by '.self::$fundraiser->owner->name;
     }
 
-    $url = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund';
+    $url = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund';
     $share_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $summary = $fundraiser->name .' is raising money for their adoption from '. $fundraiser->country; 
+    $summary = self::$fundraiser->name .' is raising money for their adoption from '. self::$fundraiser->country; 
 
     $options = get_option( 'purecharity_fundraisers_settings' );
 
