@@ -493,7 +493,7 @@ class Purecharity_Wp_Fundraisers_Public {
               <a href="?fundraiser='. $fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
               </a>
               <div class="caption">
-                <h3><a href="?fundraiser='. $fundraiser->slug; .'">'. $title .'</a></h3>
+                <h3><a href="?fundraiser='. $fundraiser->slug .'">'. $title .'</a></h3>
                 <span class="location">is adopting from '. $fundraiser->country .'</span>
                 <span class="raised">'. money_format('$%i', $fundraiser->funding_goal-$fundraiser->funding_needed).' Raised</span>
               </div>
@@ -546,7 +546,7 @@ class Purecharity_Wp_Fundraisers_Public {
           <a href="?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
           </a>
           <div class="caption">
-            <h3><a href="?fundraiser=<?php echo self::$fundraiser->slug; ?>">'. $title .'</a></h3>
+            <h3><a href="?fundraiser='. self::$fundraiser->slug .'">'. $title .'</a></h3>
             <span class="location">is adopting from '. self::$fundraiser->country .'</span>
             <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
           </div>
