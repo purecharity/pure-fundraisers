@@ -1,3 +1,25 @@
+.no-padding { padding: 0 !important; }
+.family {
+  margin:10px 0;
+}
+.family a.cover {
+  float: left;
+  width: 100%;
+  height: 112px;
+  overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+}
+.family .caption h3 {
+  margin:10px 0 -5px 0;
+  float: left;
+}
+.family .caption a,
+.family .caption span {
+  float: left;
+  width: 100%;
+}
+
 .fr-list-container .clearfix { clear:both; }
 .fr-list-container .clearfix:before,
 .fr-list-container .clearfix:after {
@@ -762,4 +784,253 @@ ul.fr-backers li .fr-backer-name {
   }
 
 
+}
+
+/* Custom Single View */
+.family-details {
+  padding-top: 20px;
+}
+.family-details hr {
+    margin: 20px 0 !important;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    box-sizing: content-box;
+    height: 0;
+}
+.families .family-details h1
+{
+  margin:10px 0 0;
+  font-size: 32px;
+  font-weight: bold;
+  color: #666;
+}
+.families .family-details h2
+{
+  font-size: 16px;
+  font-weight: normal;
+  color: #666;
+}
+.families .family-details h3
+{
+  font-size:24px;
+  margin:0 0 10px
+  color: #999;
+}
+.families .family-details h4
+{
+  font-size:12px;
+  margin:0;
+  text-transform:uppercase
+}
+.families .family-list p
+{
+  font-size:14px
+}
+.families .family-details .agency h3
+{
+  margin-bottom:0
+}
+.families.show .raised,.families.show .share-buttons
+{
+  padding:20px 0;
+  float:left;
+  width: 100%;
+}
+.families.show .raised span,.families.show .share-buttons span
+{
+  display:block
+}
+.families.show .raised span.total-raised,.families.show .raised span.share-count,.families.show .share-buttons span.total-raised,.families.show .share-buttons span.share-count
+{
+  font-size:36px;
+  font-weight:600;
+  line-height:1.2
+}
+.families.show .raised span.goal,.families.show .raised span.shares,.families.show .share-buttons span.goal,.families.show .share-buttons span.shares
+{
+  color:#7b7d79;
+  font-size:16px;
+  margin-bottom:10px
+}
+.families.show .description
+{
+  margin-bottom:20px
+}
+.families .share-count
+{
+  margin-top:10px
+}
+.families .raised h3
+{
+  font-size:13px;
+  margin-bottom:0;
+  padding-bottom:0;
+  text-transform:uppercase
+}
+  @media (min-width: 768px)
+{
+
+.pcbtn
+{
+  border:0;
+  font-size:16px;
+  font-weight:600;
+  line-height:1;
+  padding:12px 26px 10px
+}
+.pcbtn.pcbtn-block {
+  width: 100%;
+  text-align: center;
+  float: left;
+}
+.pcbtn:focus,.pcbtn:hover,.pcbtn:active
+{
+  outline:none
+}
+.pcbtn-primary,.pcbtn-primary:focus
+{
+  color:#fff;
+  background:#76cc1e
+}
+.pcbtn-primary:hover
+{
+  background:#8fe23b
+}
+.pcbtn-primary:active,.pcbtn-primary:active:hover,.pcbtn-primary:active:focus
+{
+  background:#5ca017
+}
+.pcbtn-primary[disabled],.pcbtn-primary[disabled]:hover,.pcbtn-primary[disabled]:focus,.pcbtn-primary[disabled]:active,.pcbtn-primary.disabled,.pcbtn-primary.disabled:hover,.pcbtn-primary.disabled:active
+{
+  background:#9ce551
+}
+.pcbtn-default,.pcbtn-default:focus
+{
+  background:#7b7d79;
+  color:#fff
+}
+.pcbtn-default:hover,.pcbtn-default:focus:hover
+{
+  background:#949693;
+  color:#fff
+}
+.pcbtn-default:active,.pcbtn-default:active:hover,.pcbtn-default:active:focus,.pcbtn-default:focus:active,.pcbtn-default:focus:active:hover,.pcbtn-default:focus:active:focus
+{
+  background:#616360;
+  color:#fff
+}
+.pcbtn-default.active,.pcbtn-default.active:hover,.pcbtn-default:focus.active,.pcbtn-default:focus.active:hover
+{
+  background:#64ad19;
+  color:#fff
+}
+.pcbtn-facebook,.pcbtn-facebook:focus
+{
+  background:#3b5998;
+  color:#fff
+}
+.pcbtn-facebook:hover,.pcbtn-facebook:focus:hover
+{
+  background:#4c70ba;
+  color:#fff
+}
+.pcbtn-facebook:active,.pcbtn-facebook:active:hover,.pcbtn-facebook:active:focus,.pcbtn-facebook:focus:active,.pcbtn-facebook:focus:active:hover,.pcbtn-facebook:focus:active:focus
+{
+  background:#2d4373;
+  color:#fff
+}
+.pcbtn.pcbtn-lg,.pcbtn-group-lg>.pcbtn
+{
+  font-size:18px;
+  padding:16px 18px 14px
+}
+.pcbtn.pcbtn-sm,.pcbtn-group-sm>.pcbtn
+{
+  font-size:14px;
+  padding:10px 24px 8px
+}
+
+/* Share Buttons */
+.share-buttons a
+{
+  display:block;
+  font-weight:600;
+  padding:3px 0 3px 35px;
+  margin-bottom:10px
+}
+.share-buttons .facebook
+{
+  background:url(../images/share-facebook.png) no-repeat left center;
+  background-size:24px;
+  color:#3b5998
+}
+.share-buttons .twitter
+{
+  background:url(../images/share-twitter.png) no-repeat left center;
+  background-size:24px;
+  color:#55acee
+}
+.share-buttons .google-plus
+{
+  background:url(../images/share-google-plus.png) no-repeat left center;
+  background-size:24px;
+  color:#dc4e41
+}
+.share-buttons .linkedin
+{
+  background:url(../images/share-linkedin.png) no-repeat left center;
+  background-size:24px;
+  color:#0077b5
+}
+.share-buttons .pinterest
+{
+  background:url(../images/share-pinterest.png) no-repeat left center;
+  background-size:24px;
+  color:#bd081c
+}
+.share-buttons .email
+{
+  background:url(../images/share-email.png) no-repeat left center;
+  background-size:24px;
+  color:#7b7d79
+}
+.share-buttons input
+{
+  background:url(../images/share-link.png) no-repeat 10px center;
+  background-size:16px;
+  padding-left:32px !important;
+}
+
+.form-control
+{
+  display:block;
+  width:100%;
+  height:34px;
+  padding:6px 12px;
+  font-size:14px;
+  line-height:1.42857143;
+  color:#555555;
+  background-color:#fff;
+  background-image:none;
+  border:1px solid #ccc;
+  border-radius:4px;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition:border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition:border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition:border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s
+}
+.form-control:focus
+{
+  border-color:#66afe9;
+  outline:0;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6)
+}
+
+h2 small {
+  font-weight: normal;
+  line-height: 1;
+  color: #777777;
+  font-size: 65%;
 }

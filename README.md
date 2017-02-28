@@ -24,12 +24,13 @@ Possible parameters:
 * `grid` - (true|false) Defaults to false. Set to true to enable the alternative grid view
 * `title` - (founder_name|title_and_owner_name) What to use on the title of the fundraisers. If not present, uses the fundraiser's title
 * `campaign` - Campaign slug to pull fundraisers from
-* `layout` - (1|2|3) Defaults to 1. 1) 4 columns, 2) 3 columns, 3) simplified 3 columns
+* `layout` - (1|2|3|4) Defaults to 1. 1) 4 columns, 2) 3 columns, 3) simplified 3 columns, 4) 3 columns new layout
 * `per_page` - The amount of records to fetch per page
 * `order` - (title|name|last_name|date) Sort by name, last name or date
 * `dir` - (asc|desc) Direction of sorting
 * `hide_search` - (true) Option to hide the search in specific shortcode applications
-* `layout` - (1|2|3) Choose which layout to use for the shortcode to overwrite the plugin's settings (Only works if grid=true)
+* `layout` - (1|2|3|4) Defaults to 1. 1) 4 columns, 2) 3 columns, 3) simplified 3 columns, 4) 3 columns new layout
+* Choose the layout above to use for the shortcode to overwrite the plugin's settings (Only works if grid=true)
 
 ### Last Fundraisers Listing
 `[last_fundraisers]`

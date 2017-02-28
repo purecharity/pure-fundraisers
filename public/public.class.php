@@ -231,6 +231,9 @@ class Purecharity_Wp_Fundraisers_Public {
       case 3:
         return self::grid_option_3();
         break;
+      case 4:
+        return self::grid_option_4();
+        break;
       default:
         return self::grid_option_1();
         break;
@@ -453,6 +456,108 @@ class Purecharity_Wp_Fundraisers_Public {
   }
 
   /**
+   * Grid listing layout option 4.
+   *
+   * @since    2.4
+   */
+  public static function grid_option_4(){
+
+    $html = self::print_custom_styles() ;
+    $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search().'</div>'; 
+    $html .= '<div class="pure_col no-padding">';
+
+    $used = array();
+    $counter = 1;
+    foreach(self::$fundraisers->external_fundraisers as $fundraiser){
+      if(!in_array($fundraiser->id, $used)){
+        array_push($used, $fundraiser->id);
+
+        $title = $fundraiser->name;
+        if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+          $title = $fundraiser->owner->name;
+        }
+        if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+          $title = $fundraiser->name.'<br /> by '.$fundraiser->owner->name;
+        }
+
+        if ($fundraiser->images->large == NULL) {
+          $image = $fundraiser->images->medium;
+        }else{
+          $image = $fundraiser->images->large;
+        }
+
+        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        $html .= '    
+          <div class="pure_span_8 pure_col no-border fundraiser_'.$fundraiser->id.'"">
+            <div class="family">
+              <a href="?fundraiser='. $fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
+              </a>
+              <div class="caption">
+                <h3><a href="?fundraiser='. $fundraiser->slug; .'">'. $title .'</a></h3>
+                <span class="location">is adopting from '. $fundraiser->country .'</span>
+                <span class="raised">'. money_format('$%i', $fundraiser->funding_goal-$fundraiser->funding_needed).' Raised</span>
+              </div>
+            </div>
+          </div>
+        ';
+
+        if($counter %3 == 0){
+          $html .= '<div class="clearfix"></div>';
+        }
+        $counter ++;
+      }
+    }
+    $html .= '</div>';
+    $html .= self::list_not_found(false);
+    $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
+    $html .= Purecharity_Wp_Base_Public::powered_by();
+    
+    return $html;
+  }
+
+  /**
+   * Single fundraiser list item - layout 4
+   *
+   * @since    2.4
+   */
+  public static function featured_fundraiser(){
+
+    $used = array();
+    $counter = 1;
+
+    $title = self::$fundraiser->name;
+    if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
+      $title = self::$fundraiser->owner->name;
+    }
+    if(isset(self::$options['title']) && self::$options['title'] == 'title_and_owner_name'){
+      $title = self::$fundraiser->name.'<br /> by '.self::$fundraiser->owner->name;
+    }
+
+    if (self::$fundraiser->images->large == NULL) {
+      $image = self::$fundraiser->images->medium;
+    }else{
+      $image = self::$fundraiser->images->large;
+    }
+
+    $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
+    $html .= '    
+      <div class="pure_span_8 pure_col no-border fundraiser_'.self::$fundraiser->id.'"">
+        <div class="family">
+          <a href="?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
+          </a>
+          <div class="caption">
+            <h3><a href="?fundraiser=<?php echo self::$fundraiser->slug; ?>">'. $title .'</a></h3>
+            <span class="location">is adopting from '. self::$fundraiser->country .'</span>
+            <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
+          </div>
+        </div>
+      </div>
+    ';
+    
+    return $html;
+  }
+
+  /**
    * List of Last Fundraisers.
    *
    * @since    1.0.1
@@ -519,46 +624,199 @@ class Purecharity_Wp_Fundraisers_Public {
       $title = self::$fundraiser->name.' by '.self::$fundraiser->owner->name;
     }
 
+    $url = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.$fundraiser->id.'/fund';
+    $share_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $summary = $fundraiser->name .' is raising money for their adoption from '. $fundraiser->country; 
+
     $options = get_option( 'purecharity_fundraisers_settings' );
 
     $html = self::print_custom_styles() ;
-    $html .= '
-      <div class="pure_row">
-        <div class="fr-top-row pure_col pure_span_24">
-          <div class="fr-name pure_col pure_span_18">
-            <h3>'.$title.'</h3>
-          </div>
-          <div class="fr-donate mobile-hidden fr-donate-top pure_col pure_span_6">
-            <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
+
+    if(isset(self::$options["layout"]) && ((int)self::$options['layout'] == 4)){
+      # ADOPTIONS ONLY
+      $html .= '
+        <div class="wrapper">
+          <div class="pure_row families show">
+            <div class="pure_col pure_span_16">
+              <div class="family-details">
+                <img  alt="'. self::$fundraiser->name .' is raising money on AdoptTogether for their adoption from '. self::$fundraiser->country .'." 
+                      class="img-responsive" 
+                      src="'. self::$fundraiser->images->large .'">
+                <h1 class="title">'. self::$fundraiser->name .'</h1>
+                <h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>
+                <div class="description"><p>'. self::$fundraiser->descrition .'</p></div>
+                <div class="pure_col">
+                  '. self::grid_4_pieces('adoption_status') .'
+                  '. self::grid_4_pieces('adoption_agency') .'
+                </div>
+                '. self::grid_4_pieces('about') .'
+                '. self::grid_4_pieces('updates') .'
+              </div>
+            </div>
+
+            <aside class="pure_col pure_span_8">
+              <div class="raised">
+                <h3>Raised</h3>
+                <span class="total-raised"> '. money_format('$%i', (self::$fundraiser->funding_goal-self::$fundraiser->funding_needed)) .'</span>
+                <span class="goal">of '. money_format('$%i', (self::$fundraiser->funding_goal)) .' Goal</span>
+                <a class="pcbtn pcbtn-primary pcbtn-lg pcbtn-block" href="'. $url .'">Give to this Adoption</a>
+              </div>
+              <div class="share-buttons">
+                <div class="pure_row no-padding">
+                  <div class="pure_col pure_span_12 share-button">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u='. $share_url .'">Facebook</a>
+                  </div>
+                  <div class="pure_col pure_span_12 share-button">
+                    <a class="twitter" href="https://twitter.com/home?status='. $summary .'%21%20'. $share_url .'">Twitter</a>
+                  </div>
+                </div>
+                <div class="pure_row no-padding">
+                  <div class="pure_col pure_span_12 share-button">
+                    <a class="google-plus" href="https://plus.google.com/share?url='. $share_url .'">Google +</a>
+                  </div>
+                  <div class="pure_col pure_span_12 share-button">
+                    <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url='. $share_url .'&summary='. $summary .'&source=">LinkedIn</a>
+                  </div>
+                </div>
+                <div class="pure_row no-padding">
+                  <div class="pure_col pure_span_12 share-button">
+                  <a class="pinterest" href="https://pinterest.com/pin/create/button/?url='. $url .'&media='. self::$fundraiser->images->large .'&description='. $summary .'}">Pinterest</a>
+                  </div>
+                  <div class="pure_col pure_span_12 share-button">
+                  <a class="email" href="mailto:?&subject=Check the '. self::$fundraiser->name .' fundraising campaign&body='. $summary .'%0A%0AThanks!">Email</a>
+                  </div>
+                </div>
+                <input type="text" name="url" id="url" value="'. $share_url .'" class="form-control" onclick="this.setSelectionRange(0, this.value.length)">
+              </div>
+              '. self::grid_4_pieces('backers') .'
+            </aside>
+            
           </div>
         </div>
-        <div class="fr-container pure_col pure_span_24 fundraiser_'.self::$fundraiser->id.'">
-          <div class="fr-header pure_col pure_span_24">
-            <img src="'.self::$fundraiser->images->large.'">
-          </div>
-          <div class="fr-middle-row pure_col pure_span_24">
-            <div class="fr-avatar-container pure_col pure_span_5">
-              <div class="fr-avatar" href="#" style="background-image: url('.self::$fundraiser->images->small.')"></div>
+      ';
+    }else{
+      $html .= '
+        <div class="pure_row">
+          <div class="fr-top-row pure_col pure_span_24">
+            <div class="fr-name pure_col pure_span_18">
+              <h3>'.$title.'</h3>
             </div>
-            <div class="fr-info pure_col pure_span_13">
-              <p class="fr-location">'.self::$fundraiser->country.'</p>
-                <p class="fr-organizer">
-                  Organized by <a class="fr-themed-link" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->field_partner->slug.'">'.self::$fundraiser->field_partner->name.'</a>
-                </p>
-            </div>
-            <div class="fr-donate pure_col pure_span_6">
+            <div class="fr-donate mobile-hidden fr-donate-top pure_col pure_span_6">
               <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
-              '. (isset($options['fundraise_cause']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
             </div>
           </div>
-          '. self::single_view_funding_bar() .'
-          '. self::single_view_funding_div() .'
-          '. self::single_view_tabs() .'
+          <div class="fr-container pure_col pure_span_24 fundraiser_'.self::$fundraiser->id.'">
+            <div class="fr-header pure_col pure_span_24">
+              <img src="'.self::$fundraiser->images->large.'">
+            </div>
+            <div class="fr-middle-row pure_col pure_span_24">
+              <div class="fr-avatar-container pure_col pure_span_5">
+                <div class="fr-avatar" href="#" style="background-image: url('.self::$fundraiser->images->small.')"></div>
+              </div>
+              <div class="fr-info pure_col pure_span_13">
+                <p class="fr-location">'.self::$fundraiser->country.'</p>
+                  <p class="fr-organizer">
+                    Organized by <a class="fr-themed-link" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->field_partner->slug.'">'.self::$fundraiser->field_partner->name.'</a>
+                  </p>
+              </div>
+              <div class="fr-donate pure_col pure_span_6">
+                <a class="fr-pure-button" href="'.Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund">Donate</a>
+                '. (isset($options['fundraise_cause']) ?  '' : '<a class="fr-p2p" href="'.Purecharity_Wp_Base_Public::pc_url().'/'.self::$fundraiser->slug.'/copies/new">Start a Fundraiser for this Cause</a>') .'
+              </div>
+            </div>
+            '. self::single_view_funding_bar() .'
+            '. self::single_view_funding_div() .'
+            '. self::single_view_tabs() .'
+          </div>
         </div>
-      </div>
-    ';
+      ';
+    }
+
     $html .= Purecharity_Wp_Base_Public::powered_by();
     return $html;
+  }
+
+  /**
+   * Confitional layout pieces for layout 4 (grid, single view)
+   *
+   * @since    2.4
+   */
+  public static function grid_4_pieces($piece = null){
+    if($piece == null) { return ''; }
+    $html = '';
+    switch($piece){
+
+      case 'adoption_status':
+        if(!empty(self::$fundraiser->adoption_status)){ 
+          $html = '
+            <div class="pure_span_12">
+              <h4>Adoption Status</h4>
+              <h3>'. self::$fundraiser->adoption_status .'</h3>
+            </div><hr>'; 
+        }
+        break;
+
+      case 'adoption-agency':
+        if(!empty(self::$fundraiser->adoption_agency)){ 
+          $html = '
+          <div class="pure_span_12 agency">
+            <h4>Adoption Agency</h4>
+            <h3>'. self::$fundraiser->adoption_agency .'</h3>
+            <span class="website"><a target="_blank" href="http://www.bethany.org">http://www.bethany.org</a></span>
+          </div><hr>';
+        }
+        break;
+
+      case 'about':
+        if(!empty(self::$fundraiser->about)){ 
+          $html = '
+            <hr>
+            <div class="row">
+              <div class="pure_span_24">
+                <h2>About</h2>
+                <p>'. self::$fundraiser->about .'</p>
+              </div>
+            </div>';
+          }
+        break;
+
+      case 'updates':
+        $html = '';
+        foreach(self::$fundraiser->updates as $update){ 
+          $html .= '
+            <div class="row">
+              <div class="pure_span_24">
+                <hr>
+                <h3>
+                  <a href="'. $update->title .'">'. $update->title .'</a>
+                  <small>by '. $update->author->name .'</small>
+                </h3>
+                <p class="overflow-hidden">'. $update->body .'</p>
+              </div>
+            </div>
+          '; 
+        }
+        break;
+
+      case 'backers':
+        $count = count(self::$fundraiser->backers);
+        if($count > 0){
+          $html = '<h2>'. $count . ' ' . pluralize(count(self::$fundraiser->backers), 'Donation') .' <small>from:</small></h2>'; 
+          $html .= '<ul class="list-unstyled">';
+          foreach(self::$fundraiser->backers as $backer){ 
+            $html .= '
+              <li class="donor">
+                <h5>'. $backer->name .'</h5>
+              </li>
+            '; 
+          }
+          $html .= '</ul>';
+        }
+        break;
+    }
+
+    return $html;
+
   }
 
   /**

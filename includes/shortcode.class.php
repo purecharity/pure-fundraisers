@@ -55,6 +55,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       add_shortcode('last_fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'last_fundraisers_shortcode'));
       add_shortcode('fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_shortcode'));
       add_shortcode('fundraiser_funding_bar', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_funding_bar_shortcode'));
+      add_shortcode('featured_fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'featured_fundraiser_shortcode'));
+      add_shortcode('pure_col', array('Purecharity_Wp_Fundraisers_Shortcode', 'pure_col_shortcode'));
 
       self::$base_plugin = new Purecharity_Wp_Base();
     }
@@ -73,11 +75,13 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
       'title' => get_query_var('title'),
-      'limit' => get_query_var('limit')
+      'limit' => get_query_var('limit'),
+      'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
     if(isset($_GET['fundraiser'])){
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
+      $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -133,13 +137,14 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'dir' => get_query_var('dir'),
       'order' => get_query_var('order'),
       'hide_search' => get_query_var('hide_search'),
-      'layout' => get_query_var('layout') # [1, 2, 3]
+      'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
 
     if(isset($_GET['fundraiser'])){
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
       $opt['title'] = $options['title'];
+      $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
     }else{
 
@@ -185,6 +190,48 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   }
 
   /**
+   * Featured Fundraiser shortcode.
+   *
+   * @since    2.4
+   */
+  public static function featured_fundraiser_shortcode($atts)
+  {
+    $options = shortcode_atts( array(
+      'slug' => get_query_var('slug'),
+      'title' => get_query_var('title')
+    ), $atts );
+
+    if ($options['slug']) {
+      $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['slug']);
+      if ($fundraiser) {
+        $fundraiser = $fundraiser->fundraiser;
+        Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
+        Purecharity_Wp_Fundraisers_Public::$options = $options;
+        return Purecharity_Wp_Fundraisers_Public::featured_fundraiser();
+      }else{
+        return Purecharity_Wp_Fundraisers_Public::not_found();
+      }
+    }
+  }
+
+  /**
+   * Featured Fundraiser shortcode wrapper.
+   *
+   * @since    2.4
+   */
+  public static function pure_col_shortcode($atts, $content = null)
+  {
+    $options = shortcode_atts( array(
+      'no_padding' => get_query_var('no_padding')
+    ), $atts );
+    $html .= '<div class="pure_col';
+    $html .= $options['no_padding'] == true ? ' no-padding' : '';
+    $html .= '">';
+    $html .=   do_shortcode($content);
+    $html .= '</div>';
+  }
+
+  /**
    * Initialize the Single Fundraiser shortcode.
    *
    * @since    1.0.0
@@ -193,7 +240,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   {
     $options = shortcode_atts( array(
       'slug' => get_query_var('slug'),
-      'title' => get_query_var('title')
+      'title' => get_query_var('title'),
+      'layout' => get_query_var('layout')
     ), $atts );
 
     if ($options['slug']) {
