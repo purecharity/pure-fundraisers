@@ -56,7 +56,6 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       add_shortcode('fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_shortcode'));
       add_shortcode('fundraiser_funding_bar', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraiser_funding_bar_shortcode'));
       add_shortcode('featured_fundraiser', array('Purecharity_Wp_Fundraisers_Shortcode', 'featured_fundraiser_shortcode'));
-      add_shortcode('pure_col', array('Purecharity_Wp_Fundraisers_Shortcode', 'pure_col_shortcode'));
 
       self::$base_plugin = new Purecharity_Wp_Base();
     }
@@ -198,7 +197,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   {
     $options = shortcode_atts( array(
       'slug' => get_query_var('slug'),
-      'title' => get_query_var('title')
+      'title' => get_query_var('title'),
+      'redirect' => get_query_var('redirect')
     ), $atts );
 
     if ($options['slug']) {
@@ -212,23 +212,6 @@ class Purecharity_Wp_Fundraisers_Shortcode {
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
     }
-  }
-
-  /**
-   * Featured Fundraiser shortcode wrapper.
-   *
-   * @since    2.4
-   */
-  public static function pure_col_shortcode($atts, $content = null)
-  {
-    $options = shortcode_atts( array(
-      'no_padding' => get_query_var('no_padding')
-    ), $atts );
-    $html .= '<div class="pure_col';
-    $html .= $options['no_padding'] == true ? ' no-padding' : '';
-    $html .= '">';
-    $html .=   do_shortcode($content);
-    $html .= '</div>';
   }
 
   /**

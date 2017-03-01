@@ -543,10 +543,10 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= '    
       <div class="pure_span_8 pure_col no-border fundraiser_'.self::$fundraiser->id.'"">
         <div class="family">
-          <a href="?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
+          <a href="'.self::$options['redirect'].'?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
           </a>
           <div class="caption">
-            <h3><a href="?fundraiser='. self::$fundraiser->slug .'">'. $title .'</a></h3>
+            <h3><a href="'.self::$options['redirect'].'?fundraiser='. self::$fundraiser->slug .'">'. $title .'</a></h3>
             <span class="location">is adopting from '. self::$fundraiser->country .'</span>
             <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
           </div>
