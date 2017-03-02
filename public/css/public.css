@@ -1,3 +1,11 @@
+.fundraisers-search-form input[type="text"],
+.fundraisers-search-form button {
+  display: inline-table;
+  vertical-align: middle;
+}
+.fundraisers-search-form input[type="text"] {
+  width:auto;
+}
 .no-padding { padding: 0 !important; }
 .family {
   margin:10px 0;

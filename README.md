@@ -17,6 +17,12 @@ In order to install the plugin:
 
 ## Shortcodes
 
+### Fundraisers Search
+`[fundraisers_search]`
+
+Possible parameters:
+* `page_id` - (page id) Required. Should be add the id of the page which one have fundraisers shortcode. 
+
 ### Fundraisers Listing
 `[fundraisers]`
 

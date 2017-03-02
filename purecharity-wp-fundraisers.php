@@ -148,6 +148,9 @@ function purecharity_wp_fundraisers_updater() {
       'readme' => 'README.md',
       'access_token' => '',
     );
-    new WP_GitHub_Updater( $fr_config );
+    
+    if( class_exists( 'WP_GitHub_Updater' ) ) {
+      new WP_GitHub_Updater( $fr_config );
+    }
   }
 }
