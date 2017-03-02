@@ -139,7 +139,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
                 <button type="submit">Search</button>
             </form>';
         } else {
-            $html = 'Sorry but you need to set page id where exist fundraisers plugin';
+            $html = '';
         }
 
         return $html;

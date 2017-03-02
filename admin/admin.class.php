@@ -271,7 +271,7 @@ class Purecharity_Wp_Fundraisers_Admin {
     <div class="wrap">
       <form action="options.php" method="post" class="pure-settings-form">
 				<?php 
-					echo '<img align="left" src="' . plugins_url( get_option( 'pure_base_name' ) . '/public/img/purecharity.png' ) . '" > ';
+					echo '<img align="left" src="' . plugins_url( 'purecharity-wp-base/public/img/purecharity.png' ) . '" > ';
 				?>
 				<h2 style="padding-left:100px;padding-top: 20px;padding-bottom: 50px;border-bottom: 1px solid #ccc;">PureCharity&#8482; Fundraisers Settings</h2>
 				
