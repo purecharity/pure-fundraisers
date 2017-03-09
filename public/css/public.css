@@ -27,7 +27,7 @@
   width: 13%;
   float: left;
   width: 100%;
-  height: 112px;
+  height: 240px;
   overflow: hidden;
   background-position: center center;
   background-size: cover;
@@ -1064,7 +1064,7 @@ h2 small {
 {
   display:inline-block;
   padding-left:0;
-  margin:20px 0;    
+  margin:20px 0;
   width: 100%;
   float: left;
   display: -webkit-box;
