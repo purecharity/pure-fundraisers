@@ -1160,3 +1160,4 @@ ul.page-numbers li a.divider:hover {
   cursor: default;
   color: inherit;
 }
+.img-responsive { width: 100% !important; height: auto !important; }
