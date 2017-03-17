@@ -40,11 +40,54 @@ class Purecharity_Wp_Fundraisers_Paginator {
       $html .= '<li><a class="page-numbers" href="?_page='.($meta->current_page-1).'">Previous</a></li>';
     }
 
-    for($i = 1; $i <= $meta->num_pages; $i++){
-      if($meta->current_page == $i){
-        $html .= '<li><span class="page-numbers current">'.$i.'</span></li>';
-      }else{
-        $html .= '<li><a class="page-numbers" href="?_page='.$i.'">'.$i.'</a></li>';
+    if($meta->num_pages < 10){
+      for($i = 1; $i <= $meta->num_pages; $i++){
+        if($meta->current_page == $i){
+          $html .= '<li><span class="page-numbers current">'.$i.'</span></li>';
+        }else{
+          $html .= '<li><a class="page-numbers" href="?_page='.$i.'">'.$i.'</a></li>';
+        }
+      }
+    }else{
+      # More than 10 pages, limit to 10
+      $lower_limit = $meta->current_page > 3 ? 3 : 5;
+      $upper_limit = $meta->current_page < ($meta->num_pages-3) ? 3 : 5;
+
+      for($i = 1; $i <= $lower_limit; $i++){
+        if($meta->current_page == $i){
+          $html .= '<li><span class="page-numbers current">'.$i.'</span></li>';
+        }else{
+          $html .= '<li><a class="page-numbers" href="?_page='.$i.'">'.$i.'</a></li>';
+        }
+      }
+      $html .= '<li><a class="divider">...</a></li>';
+
+      if($meta->current_page == 4){
+        $html .= '<li><span class="page-numbers current">4</span></li>';
+        $html .= '<li><a class="divider">...</a></li>';
+      }
+
+      if((int)$meta->current_page > 4 && (int)$meta->current_page < ($meta->num_pages-4)){
+        for($i = ($meta->current_page-1); $i <= ($meta->current_page+1); $i++){
+          if($meta->current_page == $i){
+            $html .= '<li><span class="page-numbers current">'.$i.'</span></li>';
+          }else{
+            $html .= '<li><a class="page-numbers" href="?_page='.$i.'">'.$i.'</a></li>';
+          }
+        } 
+        $html .= '<li><a class="divider">...</a></li>';
+      }
+
+      if($meta->current_page == ($meta->num_pages-4)){
+        $html .= '<li><span class="page-numbers current">'. $meta->current_page .'</span></li>';
+      }
+
+      for($i = ($meta->num_pages-$upper_limit); $i <= $meta->num_pages; $i++){
+        if($meta->current_page == $i){
+          $html .= '<li><span class="page-numbers current">'.$i.'</span></li>';
+        }else{
+          $html .= '<li><a class="page-numbers" href="?_page='.$i.'">'.$i.'</a></li>';
+        }
       }
     }
     
