@@ -1154,3 +1154,10 @@ h2 small {
 ul.page-numbers {
   padding: 20px 0 !important;
 }
+ul.page-numbers li a.divider:hover {
+  background: transparent;
+  border: none;
+  cursor: default;
+  color: inherit;
+}
+.img-responsive { width: 100% !important; height: auto !important; }
