@@ -757,13 +757,16 @@ class Purecharity_Wp_Fundraisers_Public {
         break;
 
       case 'adoption-agency':
-        if(!empty(self::$fundraiser->adoption_agency)){ 
+        if(!empty(self::$fundraiser->beneficiary_field_partner_name)){ 
+          $website = self::$fundraiser->beneficiary_field_partner_website;
           $html = '
           <div class="pure_span_12 agency">
             <h4>Adoption Agency</h4>
-            <h3>'. self::$fundraiser->adoption_agency .'</h3>
-            <span class="website"><a target="_blank" href="http://www.bethany.org">http://www.bethany.org</a></span>
-          </div><hr>';
+            <h3>'. self::$fundraiser->beneficiary_field_partner_name .'</h3>';
+            if(!empty($website)){
+              $html .= '<span class="website"><a target="_blank" href="'.$website.'">'.$website.'</a></span>';
+            }
+          $html .= '</div><hr>';
         }
         break;
 
