@@ -1,3 +1,4 @@
+/* Fundraiser Search */
 .fundraisers-search-form input[type="text"],
 .fundraisers-search-form button {
   display: inline-table;
@@ -19,6 +20,8 @@
   font-size: 0.8em;
   box-sizing: border-box;
 }
+
+
 .no-padding { padding: 0 !important; }
 .family {
   margin:10px 0;
@@ -892,7 +895,7 @@ ul.fr-backers li .fr-backer-name {
   padding-bottom:0;
   text-transform:uppercase
 }
-  @media (min-width: 768px)
+  @media (min-width: 320px)
 {
 
 .pcbtn
@@ -1161,3 +1164,19 @@ ul.page-numbers li a.divider:hover {
   color: inherit;
 }
 .img-responsive { width: 100% !important; height: auto !important; }
+
+/* Mobile fundraiser search */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 667px) {
+  .fundraisers-search-form input[type="text”]
+  {
+    width: 100%
+  }
+
+  .fundraisers-search-form button
+  {
+    width: 100%;
+    margin-top: 10px
+  }
+}
