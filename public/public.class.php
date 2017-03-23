@@ -471,6 +471,7 @@ class Purecharity_Wp_Fundraisers_Public {
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
       if(!in_array($fundraiser->id, $used)){
         array_push($used, $fundraiser->id);
+        self::$fundraiser = $fundraiser;
 
         $title = $fundraiser->name;
         if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
@@ -494,8 +495,8 @@ class Purecharity_Wp_Fundraisers_Public {
               </a>
               <div class="caption">
                 <h3><a href="?fundraiser='. $fundraiser->slug .'">'. $title .'</a></h3>
-                <span class="location">is adopting from '. $fundraiser->country .'</span>
-                <span class="raised">'. money_format('$%i', $fundraiser->funding_goal-$fundraiser->funding_needed).' Raised</span>
+                '. self::grid_4_pieces('adopting_from') .'
+                <span class="raised">$'. number_format($fundraiser->funding_goal-$fundraiser->funding_needed, 2).' Raised</span>
               </div>
             </div>
           </div>
@@ -547,8 +548,8 @@ class Purecharity_Wp_Fundraisers_Public {
           </a>
           <div class="caption">
             <h3><a href="'.self::$options['redirect'].'?fundraiser='. self::$fundraiser->slug .'">'. $title .'</a></h3>
-            <span class="location">is adopting from '. self::$fundraiser->country .'</span>
-            <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
+            '. self::grid_4_pieces('adopting_from') .'
+            <span class="raised">$'. number_format(self::$fundraiser->funding_goal-self::$fundraiser->funding_needed, 2).' Raised</span>
           </div>
         </div>
       </div>
@@ -657,8 +658,8 @@ class Purecharity_Wp_Fundraisers_Public {
             <aside class="pure_col pure_span_8">
               <div class="raised">
                 <h3>Raised</h3>
-                <span class="total-raised"> '. money_format('$%i', (self::$fundraiser->funding_goal-self::$fundraiser->funding_needed)) .'</span>
-                <span class="goal">of '. money_format('$%i', (self::$fundraiser->funding_goal)) .' Goal</span>
+                <span class="total-raised"> $'. number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 2) .'</span>
+                <span class="goal">of $'. number_format((self::$fundraiser->funding_goal), 2) .' Goal</span>
                 <a class="pcbtn pcbtn-primary pcbtn-lg pcbtn-block" href="'. $url .'">Give to this Adoption</a>
               </div>
               <div class="share-buttons">
@@ -745,6 +746,13 @@ class Purecharity_Wp_Fundraisers_Public {
     if($piece == null) { return ''; }
     $html = '';
     switch($piece){
+
+      case 'adopting_from':
+        if(!empty(self::$fundraiser->country)){ 
+          $html = '<span class="location">is adopting from '. self::$fundraiser->country .'</span>'; 
+        }
+        break;
+
 
       case 'adoption_status':
         if(!empty(self::$fundraiser->adoption_status)){ 
