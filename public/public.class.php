@@ -644,7 +644,7 @@ class Purecharity_Wp_Fundraisers_Public {
                       class="img-responsive" 
                       src="'. self::$fundraiser->images->large .'">
                 <h1 class="title">'. self::$fundraiser->name .'</h1>
-                <h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>
+                '. self::grid_4_pieces('adopting_from_show') .'
                 <div class="description"><p>'. self::$fundraiser->descrition .'</p></div>
                 <div class="pure_col">
                   '. self::grid_4_pieces('adoption_status') .'
@@ -750,6 +750,12 @@ class Purecharity_Wp_Fundraisers_Public {
       case 'adopting_from':
         if(!empty(self::$fundraiser->country)){ 
           $html = '<span class="location">is adopting from '. self::$fundraiser->country .'</span>'; 
+        }
+        break;
+
+      case 'adopting_from_show':
+        if(!empty(self::$fundraiser->country)){ 
+          $html = '<h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>'; 
         }
         break;
 
