@@ -471,6 +471,7 @@ class Purecharity_Wp_Fundraisers_Public {
     foreach(self::$fundraisers->external_fundraisers as $fundraiser){
       if(!in_array($fundraiser->id, $used)){
         array_push($used, $fundraiser->id);
+        self::$fundraiser = $fundraiser;
 
         $title = $fundraiser->name;
         if(isset(self::$options['title']) && self::$options['title'] == 'owner_name'){
@@ -494,8 +495,8 @@ class Purecharity_Wp_Fundraisers_Public {
               </a>
               <div class="caption">
                 <h3><a href="?fundraiser='. $fundraiser->slug .'">'. $title .'</a></h3>
-                <span class="location">is adopting from '. $fundraiser->country .'</span>
-                <span class="raised">'. money_format('$%i', $fundraiser->funding_goal-$fundraiser->funding_needed).' Raised</span>
+                '. self::grid_4_pieces('adopting_from') .'
+                <span class="raised">$'. number_format($fundraiser->funding_goal-$fundraiser->funding_needed, 2).' Raised</span>
               </div>
             </div>
           </div>
@@ -547,8 +548,8 @@ class Purecharity_Wp_Fundraisers_Public {
           </a>
           <div class="caption">
             <h3><a href="'.self::$options['redirect'].'?fundraiser='. self::$fundraiser->slug .'">'. $title .'</a></h3>
-            <span class="location">is adopting from '. self::$fundraiser->country .'</span>
-            <span class="raised">'. money_format('$%i', self::$fundraiser->funding_goal-self::$fundraiser->funding_needed).' Raised</span>
+            '. self::grid_4_pieces('adopting_from') .'
+            <span class="raised">$'. number_format(self::$fundraiser->funding_goal-self::$fundraiser->funding_needed, 2).' Raised</span>
           </div>
         </div>
       </div>
@@ -643,7 +644,7 @@ class Purecharity_Wp_Fundraisers_Public {
                       class="img-responsive" 
                       src="'. self::$fundraiser->images->large .'">
                 <h1 class="title">'. self::$fundraiser->name .'</h1>
-                <h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>
+                '. self::grid_4_pieces('adopting_from_show') .'
                 <div class="description"><p>'. self::$fundraiser->descrition .'</p></div>
                 <div class="pure_col">
                   '. self::grid_4_pieces('adoption_status') .'
@@ -657,8 +658,8 @@ class Purecharity_Wp_Fundraisers_Public {
             <aside class="pure_col pure_span_8">
               <div class="raised">
                 <h3>Raised</h3>
-                <span class="total-raised"> '. money_format('$%i', (self::$fundraiser->funding_goal-self::$fundraiser->funding_needed)) .'</span>
-                <span class="goal">of '. money_format('$%i', (self::$fundraiser->funding_goal)) .' Goal</span>
+                <span class="total-raised"> $'. number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 2) .'</span>
+                <span class="goal">of $'. number_format((self::$fundraiser->funding_goal), 2) .' Goal</span>
                 <a class="pcbtn pcbtn-primary pcbtn-lg pcbtn-block" href="'. $url .'">Give to this Adoption</a>
               </div>
               <div class="share-buttons">
@@ -746,6 +747,19 @@ class Purecharity_Wp_Fundraisers_Public {
     $html = '';
     switch($piece){
 
+      case 'adopting_from':
+        if(!empty(self::$fundraiser->country)){ 
+          $html = '<span class="location">is adopting from '. self::$fundraiser->country .'</span>'; 
+        }
+        break;
+
+      case 'adopting_from_show':
+        if(!empty(self::$fundraiser->country)){ 
+          $html = '<h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>'; 
+        }
+        break;
+
+
       case 'adoption_status':
         if(!empty(self::$fundraiser->adoption_status)){ 
           $html = '
@@ -757,13 +771,16 @@ class Purecharity_Wp_Fundraisers_Public {
         break;
 
       case 'adoption-agency':
-        if(!empty(self::$fundraiser->adoption_agency)){ 
+        if(!empty(self::$fundraiser->beneficiary_field_partner_name)){ 
+          $website = self::$fundraiser->beneficiary_field_partner_website;
           $html = '
           <div class="pure_span_12 agency">
             <h4>Adoption Agency</h4>
-            <h3>'. self::$fundraiser->adoption_agency .'</h3>
-            <span class="website"><a target="_blank" href="http://www.bethany.org">http://www.bethany.org</a></span>
-          </div><hr>';
+            <h3>'. self::$fundraiser->beneficiary_field_partner_name .'</h3>';
+            if(!empty($website)){
+              $html .= '<span class="website"><a target="_blank" href="'.$website.'">'.$website.'</a></span>';
+            }
+          $html .= '</div><hr>';
         }
         break;
 
