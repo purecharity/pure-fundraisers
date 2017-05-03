@@ -105,7 +105,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public static function list_not_found($default = true){
-    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>' . ($default ? Purecharity_Wp_Base_Public::powered_by() : '');
+    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>';
     return $html;
   }
 
@@ -309,7 +309,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -378,7 +378,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -446,7 +446,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -509,7 +509,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
     $html .= '</div>';
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
     
