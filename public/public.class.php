@@ -105,7 +105,7 @@ class Purecharity_Wp_Fundraisers_Public {
    * @since    1.0.0
    */
   public static function list_not_found($default = true){
-    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>' . ($default ? Purecharity_Wp_Base_Public::powered_by() : '');
+    $html = '<p class="fr-not-found" style="'. ( $default ? '' : 'display:none' ) .'">No Fundraisers Found.</p>';
     return $html;
   }
 
@@ -309,7 +309,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -378,7 +378,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -446,7 +446,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
 
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= '</div>';
     $html .= '</div>';
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
@@ -496,7 +496,7 @@ class Purecharity_Wp_Fundraisers_Public {
               <div class="caption">
                 <h3><a href="?fundraiser='. $fundraiser->slug .'">'. $title .'</a></h3>
                 '. self::grid_4_pieces('adopting_from') .'
-                <span class="raised">$'. number_format($fundraiser->funding_goal-$fundraiser->funding_needed, 2).' Raised</span>
+                '. self::grid_4_pieces('funding_list') .'
               </div>
             </div>
           </div>
@@ -509,7 +509,7 @@ class Purecharity_Wp_Fundraisers_Public {
       }
     }
     $html .= '</div>';
-    $html .= self::list_not_found(false);
+    $html .= self::list_not_found(!!(count($used)==0));
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
     
@@ -625,7 +625,7 @@ class Purecharity_Wp_Fundraisers_Public {
       $title = self::$fundraiser->name.' by '.self::$fundraiser->owner->name;
     }
 
-    $url = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund';
+    self::$options['external_url'] = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund';
     $share_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $summary = self::$fundraiser->name .' is raising money for their adoption from '. self::$fundraiser->country; 
 
@@ -656,12 +656,7 @@ class Purecharity_Wp_Fundraisers_Public {
             </div>
 
             <aside class="pure_col pure_span_8">
-              <div class="raised">
-                <h3>Raised</h3>
-                <span class="total-raised"> $'. number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 2) .'</span>
-                <span class="goal">of $'. number_format((self::$fundraiser->funding_goal), 2) .' Goal</span>
-                <a class="pcbtn pcbtn-primary pcbtn-lg pcbtn-block" href="'. $url .'">Give to this Adoption</a>
-              </div>
+              '. self::grid_4_pieces('funding') .'
               <div class="share-buttons">
                 <div class="pure_row no-padding">
                   <div class="pure_col pure_span_12 share-button">
@@ -746,6 +741,28 @@ class Purecharity_Wp_Fundraisers_Public {
     if($piece == null) { return ''; }
     $html = '';
     switch($piece){
+
+      case 'funding_list':
+        $html = '';
+        if(is_int(self::$fundraiser->funding_goal)){
+          $html = '<span class="raised">$'. number_format(self::$fundraiser->funding_goal-self::$fundraiser->funding_needed, 2).' Raised</span>';
+        }
+        break;
+
+      case 'funding':
+        $html = '<div class="raised">';
+        if(is_int(self::$fundraiser->funding_goal)){
+          $html .= '
+            <h3>Raised</h3>
+            <span class="total-raised"> $'. number_format((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed), 2) .'</span>
+            <span class="goal">of $'. number_format(self::$fundraiser->funding_goal, 2) .' Goal</span>
+          ';
+        }
+        $html .= '
+          <a class="pcbtn pcbtn-primary pcbtn-lg pcbtn-block" href="'. self::$options['external_url'] .'">Give to this Adoption</a>
+        </div>';
+
+        break;
 
       case 'adopting_from':
         if(!empty(self::$fundraiser->country)){ 
