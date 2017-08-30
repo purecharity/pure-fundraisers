@@ -132,7 +132,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
     if(isset($options["live_filter"]) && (empty(self::$options['hide_search']) || self::$options['hide_search'] != 'true')){
       $html = '
-        <div class="fr-filtering">
+        <div class="fr-filtering pure_col pure_span_24">
           <form method="get">
             <fieldset class="livefilter fr-livefilter">
               <legend>
@@ -248,7 +248,7 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function grid_option_1(){
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
-    $html .= '<div>'; 
+    $html .= '<div>';
 
     $used = array();
     $counter = 1;
@@ -326,7 +326,7 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function grid_option_2(){
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
-    $html .= '<div>'; 
+    $html .= '<div>';
 
     $used = array();
     $counter = 1;
@@ -395,7 +395,7 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function grid_option_3(){
     $html = self::print_custom_styles() ;
     $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search();
-    $html .= '<div>'; 
+    $html .= '<div>';
 
     $used = array();
     $counter = 1;
@@ -463,7 +463,7 @@ class Purecharity_Wp_Fundraisers_Public {
   public static function grid_option_4(){
 
     $html = self::print_custom_styles() ;
-    $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search().'</div>'; 
+    $html .= '<div class="fr-list-container pure_centered pure_row is-grid">'.self::live_search().'</div>';
     $html .= '<div class="pure_col no-padding">';
 
     $used = array();
@@ -488,7 +488,7 @@ class Purecharity_Wp_Fundraisers_Public {
         }
 
         $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
-        $html .= '    
+        $html .= '
           <div class="pure_span_8 pure_col no-border fundraiser_'.$fundraiser->id.'"">
             <div class="family">
               <a href="?fundraiser='. $fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
@@ -512,7 +512,7 @@ class Purecharity_Wp_Fundraisers_Public {
     $html .= self::list_not_found(!!(count($used)==0));
     $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
-    
+
     return $html;
   }
 
@@ -541,7 +541,7 @@ class Purecharity_Wp_Fundraisers_Public {
     }
 
     $funded = self::percent((self::$fundraiser->funding_goal-self::$fundraiser->funding_needed) ,self::$fundraiser->funding_goal);
-    $html .= '    
+    $html .= '
       <div class="pure_span_8 pure_col no-border fundraiser_'.self::$fundraiser->id.'"">
         <div class="family">
           <a href="'.self::$options['redirect'].'?fundraiser='. self::$fundraiser->slug .'" class="cover" style="background-image: url('. $image .');">
@@ -554,7 +554,7 @@ class Purecharity_Wp_Fundraisers_Public {
         </div>
       </div>
     ';
-    
+
     return $html;
   }
 
@@ -601,7 +601,7 @@ class Purecharity_Wp_Fundraisers_Public {
           </div>
           </div>
         ';
-      }      
+      }
     }
 
     $html .= self::list_not_found(false);
@@ -627,7 +627,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
     self::$options['external_url'] = Purecharity_Wp_Base_Public::pc_url().'/fundraisers/'.self::$fundraiser->id.'/fund';
     $share_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-    $summary = self::$fundraiser->name .' is raising money for their adoption from '. self::$fundraiser->country; 
+    $summary = self::$fundraiser->name .' is raising money for their adoption from '. self::$fundraiser->country;
 
     $options = get_option( 'purecharity_fundraisers_settings' );
 
@@ -640,8 +640,8 @@ class Purecharity_Wp_Fundraisers_Public {
           <div class="pure_row families show">
             <div class="pure_col pure_span_16">
               <div class="family-details">
-                <img  alt="'. self::$fundraiser->name .' is raising money on AdoptTogether for their adoption from '. self::$fundraiser->country .'." 
-                      class="img-responsive" 
+                <img  alt="'. self::$fundraiser->name .' is raising money for their adoption from '. self::$fundraiser->country .'."
+                      class="img-responsive"
                       src="'. self::$fundraiser->images->large .'">
                 <h1 class="title">'. self::$fundraiser->name .'</h1>
                 '. self::grid_4_pieces('adopting_from_show') .'
@@ -686,7 +686,7 @@ class Purecharity_Wp_Fundraisers_Public {
               </div>
               '. self::grid_4_pieces('backers') .'
             </aside>
-            
+
           </div>
         </div>
       ';
@@ -765,30 +765,30 @@ class Purecharity_Wp_Fundraisers_Public {
         break;
 
       case 'adopting_from':
-        if(!empty(self::$fundraiser->country)){ 
-          $html = '<span class="location">is adopting from '. self::$fundraiser->country .'</span>'; 
+        if(!empty(self::$fundraiser->country)){
+          $html = '<span class="location">is adopting from '. self::$fundraiser->country .'</span>';
         }
         break;
 
       case 'adopting_from_show':
-        if(!empty(self::$fundraiser->country)){ 
-          $html = '<h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>'; 
+        if(!empty(self::$fundraiser->country)){
+          $html = '<h2 class="subtitle">is adopting a child from '. self::$fundraiser->country .'</h2>';
         }
         break;
 
 
       case 'adoption_status':
-        if(!empty(self::$fundraiser->adoption_status)){ 
+        if(!empty(self::$fundraiser->adoption_status)){
           $html = '
             <div class="pure_span_12">
               <h4>Adoption Status</h4>
               <h3>'. self::$fundraiser->adoption_status .'</h3>
-            </div><hr>'; 
+            </div><hr>';
         }
         break;
 
       case 'adoption-agency':
-        if(!empty(self::$fundraiser->beneficiary_field_partner_name)){ 
+        if(!empty(self::$fundraiser->beneficiary_field_partner_name)){
           $website = self::$fundraiser->beneficiary_field_partner_website;
           $html = '
           <div class="pure_span_12 agency">
@@ -802,7 +802,7 @@ class Purecharity_Wp_Fundraisers_Public {
         break;
 
       case 'about':
-        if(!empty(self::$fundraiser->about)){ 
+        if(!empty(self::$fundraiser->about)){
           $html = '
             <hr>
             <div class="row">
@@ -816,7 +816,7 @@ class Purecharity_Wp_Fundraisers_Public {
 
       case 'updates':
         $html = '';
-        foreach(self::$fundraiser->updates as $update){ 
+        foreach(self::$fundraiser->updates as $update){
           $html .= '
             <div class="row">
               <div class="pure_span_24">
@@ -828,21 +828,21 @@ class Purecharity_Wp_Fundraisers_Public {
                 <p class="overflow-hidden">'. $update->body .'</p>
               </div>
             </div>
-          '; 
+          ';
         }
         break;
 
       case 'backers':
         $count = count(self::$fundraiser->backers);
         if($count > 0){
-          $html = '<h2>'. $count . ' ' . pluralize(count(self::$fundraiser->backers), 'Donation') .' <small>from:</small></h2>'; 
+          $html = '<h2>'. $count . ' ' . pluralize(count(self::$fundraiser->backers), 'Donation') .' <small>from:</small></h2>';
           $html .= '<ul class="list-unstyled">';
-          foreach(self::$fundraiser->backers as $backer){ 
+          foreach(self::$fundraiser->backers as $backer){
             $html .= '
               <li class="donor">
                 <h5>'. $backer->name .'</h5>
               </li>
-            '; 
+            ';
           }
           $html .= '</ul>';
         }
@@ -912,9 +912,9 @@ class Purecharity_Wp_Fundraisers_Public {
    *
    * @since    1.0.5
    */
-  public static function single_view_funding_bar(){ 
-    include('includes/single-view-funding-bar.php'); 
-    return $html; 
+  public static function single_view_funding_bar(){
+    include('includes/single-view-funding-bar.php');
+    return $html;
   }
 
   /**
