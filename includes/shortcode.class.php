@@ -22,7 +22,6 @@
  */
 class Purecharity_Wp_Fundraisers_Shortcode {
 
-
   /**
    * The Base Plugin.
    *
@@ -40,7 +39,6 @@ class Purecharity_Wp_Fundraisers_Shortcode {
   public function __construct() {
     $this->actions = array();
     $this->filters = array();
-
   }
 
   /**
@@ -48,9 +46,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    *
    * @since    1.0.0
    */
-  public static function init()
-  {
-    if(Purecharity_Wp_Fundraisers::base_present()){
+  public static function init() {
+    if (Purecharity_Wp_Fundraisers::base_present()) {
       add_shortcode('fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraisers_shortcode'));
       add_shortcode('fundraisers_search', array('Purecharity_Wp_Fundraisers_Shortcode', 'fundraisers_search_shortcode'));
       add_shortcode('last_fundraisers', array('Purecharity_Wp_Fundraisers_Shortcode', 'last_fundraisers_shortcode'));
@@ -67,8 +64,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    *
    * @since    1.0.1
    */
-  public static function last_fundraisers_shortcode($atts)
-  {
+  public static function last_fundraisers_shortcode($atts) {
     $options = shortcode_atts( array(
       'fundraiser' => false,
       'query' => get_query_var('query'),
@@ -78,34 +74,33 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'limit' => get_query_var('limit'),
       'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
-    if(isset($_GET['fundraiser'])){
+    if (isset($_GET['fundraiser'])) {
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
       $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
-    }else{
-
+    } else {
       $query_var = array();
 
-      if(isset($options['limit']) && $options['limit'] != ''){
+      if (isset($options['limit']) && $options['limit'] != '') {
         $query_var[] = 'limit='.$options['limit'];
-      }else{
+      } else {
         $query_var[] = 'limit=4';
       }
 
-      if(isset($options['order']) && $options['order'] != ''){
-        if(isset($options['title']) && $options['title'] == 'owner_name'){
+      if (isset($options['order']) && $options['order'] != '') {
+        if (isset($options['title']) && $options['title'] == 'owner_name') {
           $query_var[] = 'sort=founder';
-        }else{
+        } else {
           $query_var[] = 'sort='.$options['order'];
         }
       }
 
-      if(isset($options['dir']) && $options['dir'] != ''){
+      if (isset($options['dir']) && $options['dir'] != '') {
         $query_var[] = 'dir='.$options['dir'];
       }
 
-      if(isset($options['query']) && $options['query'] != ''){
+      if (isset($options['query']) && $options['query'] != '') {
         $query_var[] = 'query=' . urlencode($options['query']);
       }
 
@@ -114,45 +109,43 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       if ($fundraisers && count($fundraisers) > 0) {
         Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
         return Purecharity_Wp_Fundraisers_Public::listing_last_grid();
-      }else{
+      } else {
         return Purecharity_Wp_Fundraisers_Public::list_not_found();
-      };
+      }
     }
   }
 
-    /**
-     * Initialize the Fundraisers Search shortcode.
-     *
-     * @since    2.5.0
-     */
+/**
+ * Initialize the Fundraisers Search shortcode.
+ *
+ * @since    2.5.0
+ */
+  public static function fundraisers_search_shortcode($atts) {
+    $options = shortcode_atts([
+        'page_id' => get_query_var('page_id')
+    ], $atts);
+    $query_param = Purecharity_Wp_Fundraisers_Paginator::get_query_param(true);
 
-    public static function fundraisers_search_shortcode($atts)
-    {
-        $options = shortcode_atts([
-            'page_id' => get_query_var('page_id')
-        ], $atts);
-
-        if ($options['page_id'] != 0 && get_permalink($options['page_id'])) {
-            $html = '
-            <form class="fundraisers-search-form" action="' . get_permalink($options['page_id']) . '">
-                <input type="text" name="query" placeholder="Search for an Adopting Family">
-                <button type="submit">Search</button>
-            </form>';
-        } else {
-            $html = '';
-        }
-
-        return $html;
+    if ($options['page_id'] != 0 && get_permalink($options['page_id'])) {
+        $html = '
+        <form class="fundraisers-search-form" action="' . get_permalink($options['page_id']) . '">
+            <input type="text" name="query" placeholder="Search for an Adopting Family" value="'.$query_param.'">
+            <button type="submit">Search</button>
+        </form>';
+    } else {
+        $html = '';
     }
+
+    return $html;
+  }
 
   /**
    * Initialize the Fundraisers Listing shortcode.
    *
    * @since    1.0.0
    */
-  public static function fundraisers_shortcode($atts)
-  {
-    $options = shortcode_atts( array(
+  public static function fundraisers_shortcode($atts) {
+    $options = shortcode_atts( array (
       'fundraiser' => false,
       'query' => get_query_var('query'),
       'grid' => get_query_var('grid'),
@@ -165,36 +158,35 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       'layout' => get_query_var('layout') # [1, 2, 3, 4]
     ), $atts );
 
-    if(isset($_GET['fundraiser'])){
+    if (isset($_GET['fundraiser'])) {
       $opt = array();
       $opt['slug'] = $_GET['fundraiser'];
       $opt['title'] = $options['title'];
       $opt['layout'] = $options['layout'];
       return self::fundraiser_shortcode($opt);
-    }else{
-
+    } else {
       $query_var = array();
-      if(isset($_GET['_page']) && $_GET['_page'] != ''){
+      if (isset($_GET['_page']) && $_GET['_page'] != '') {
         $query_var[] = 'page='.$_GET['_page'];
       }
-      if(isset($options['per_page']) && $options['per_page'] != ''){
+      if (isset($options['per_page']) && $options['per_page'] != '') {
         $query_var[] = 'limit='.$options['per_page'];
       }
-      if(isset($options['campaign']) && $options['campaign'] != ''){
+      if (isset($options['campaign']) && $options['campaign'] != '') {
         $query_var[] = 'campaign_id='.$options['campaign'];
       }
-      if(isset($options['order']) && $options['order'] != ''){
-        if(isset($options['title']) && $options['title'] == 'owner_name'){
+      if (isset($options['order']) && $options['order'] != '') {
+        if (isset($options['title']) && $options['title'] == 'owner_name') {
           $query_var[] = 'sort=founder';
-        }else{
+        } else {
           $query_var[] = 'sort='.$options['order'];
         }
       }
-      if(isset($options['dir']) && $options['dir'] != ''){
+      if (isset($options['dir']) && $options['dir'] != '') {
         $query_var[] = 'dir='.$options['dir'];
       }
 
-      if(isset($_GET['query']) && $_GET['query'] != ''){
+      if (isset($_GET['query']) && $_GET['query'] != '') {
         $query_var[] = 'query=' . urlencode($_GET['query']);
       }
 
@@ -203,14 +195,14 @@ class Purecharity_Wp_Fundraisers_Shortcode {
       if ($fundraisers && count($fundraisers) > 0) {
         Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
-        if($options['grid'] == 'true'){
+        if ($options['grid'] == 'true') {
           return Purecharity_Wp_Fundraisers_Public::listing_grid($options);
-        }else{
+        } else {
           return Purecharity_Wp_Fundraisers_Public::listing();
         }
-      }else{
+      } else {
         return Purecharity_Wp_Fundraisers_Public::list_not_found();
-      };
+      }
     }
   }
 
@@ -219,9 +211,8 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    *
    * @since    2.4
    */
-  public static function featured_fundraiser_shortcode($atts)
-  {
-    $options = shortcode_atts( array(
+  public static function featured_fundraiser_shortcode($atts) {
+    $options = shortcode_atts( array (
       'slug' => get_query_var('slug'),
       'title' => get_query_var('title'),
       'redirect' => get_query_var('redirect')
@@ -234,7 +225,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         return Purecharity_Wp_Fundraisers_Public::featured_fundraiser();
-      }else{
+      } else {
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
     }
@@ -245,8 +236,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    *
    * @since    1.0.0
    */
-  public static function fundraiser_shortcode($atts)
-  {
+  public static function fundraiser_shortcode($atts) {
     $options = shortcode_atts( array(
       'slug' => get_query_var('slug'),
       'title' => get_query_var('title'),
@@ -260,7 +250,7 @@ class Purecharity_Wp_Fundraisers_Shortcode {
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         return Purecharity_Wp_Fundraisers_Public::show();
-      }else{
+      } else {
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
     }
@@ -271,24 +261,21 @@ class Purecharity_Wp_Fundraisers_Shortcode {
    *
    * @since    1.2.1
    */
-  public static function fundraiser_funding_bar_shortcode($atts)
-  {
+  public static function fundraiser_funding_bar_shortcode($atts) {
     $options = shortcode_atts( array(
       'fundraiser' => false,
       'standalone_bar' => true
     ), $atts );
     if ($options['fundraiser']) {
       $fundraiser = self::$base_plugin->api_call('fundraisers/show?slug='. $options['fundraiser']);
-
       if ($fundraiser) {
         $fundraiser = $fundraiser->fundraiser;
         Purecharity_Wp_Fundraisers_Public::$fundraiser = $fundraiser;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         return Purecharity_Wp_Fundraisers_Public::single_view_funding_bar();
-      }else{
+      } else {
         return Purecharity_Wp_Fundraisers_Public::not_found();
       }
-
     }
   }
 
