@@ -205,6 +205,7 @@ class Purecharity_Wp_Fundraisers_Public {
         '.self::list_not_found(false).'
       </div>
     ';
+    $html .= Purecharity_Wp_Fundraisers_Paginator::page_links(self::$fundraisers->meta);
     $html .= Purecharity_Wp_Base_Public::powered_by();
 
     return $html;
