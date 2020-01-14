@@ -715,7 +715,7 @@ ul.fr-backers li .fr-backer-name {
     margin-right: 1%;
   }
   .pure_col[class*="span"] {
-    margin-left: 1% !important;
+    margin-left: 0% !important;
   }
 }
 
