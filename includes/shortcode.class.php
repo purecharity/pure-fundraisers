@@ -192,7 +192,10 @@ class Purecharity_Wp_Fundraisers_Shortcode {
 
       $fundraisers = self::$base_plugin->api_call('external_fundraisers?' . join('&', $query_var));
 
-      if ($fundraisers && count($fundraisers) > 0) {
+      //converting $fundraisers into an array so that it is countable with count()
+      $fundraisers_array = json_decode(json_encode($fundraisers), true);
+
+      if ($fundraisers && count($fundraisers_array) > 0) {
         Purecharity_Wp_Fundraisers_Public::$fundraisers = $fundraisers;
         Purecharity_Wp_Fundraisers_Public::$options = $options;
         if ($options['grid'] == 'true') {
