@@ -271,7 +271,10 @@ class Purecharity_Wp_Fundraisers_Public {
           $image = $fundraiser->images->medium;
         }
 
-        $funded = self::percent(($fundraiser->funding_goal-$fundraiser->funding_needed) ,$fundraiser->funding_goal);
+        //Converting $fundraiser from stdClass to int so it can be used in percent()
+        $fundraiser_count = count(json_decode(json_encode($fundraiser), true));
+
+        $funded = self::percent(($fundraiser_count->funding_goal-$fundraiser_count->funding_needed) ,$fundraiser_count->funding_goal);
         $html .= '
           <div class="fr-grid-list-item pure_span_6 pure_col fundraiser_'.$fundraiser->id.'">
             <div class="fr-grid-list-content">
